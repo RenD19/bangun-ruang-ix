@@ -241,6 +241,17 @@
             <li>Setelah itu buka tab <a href="#latihan">Latihan Mandiri</a> untuk latihan per topik atau simulasi sumatif 30 soal.</li>
           </ol></div>
         </section>
+        <section class="card"><h3>Unsur dan ciri ketiga bangun</h3>
+          <p class="muted">Bangun ruang sisi lengkung dibedakan dari banyak sisi datar, sisi lengkung, dan ada tidaknya titik puncak. Prisma dicantumkan sebagai pembanding.</p>
+          <div class="tbl-wrap"><table class="tbl"><thead><tr><th>Unsur</th><th class="c-tabung">Tabung</th><th class="c-kerucut">Kerucut</th><th class="c-bola">Bola</th><th>Prisma segitiga</th></tr></thead><tbody>
+            <tr><td>Sisi datar</td><td>2 lingkaran (alas dan tutup)</td><td>1 lingkaran (alas)</td><td>tidak ada</td><td>5 (2 segitiga, 3 persegi panjang)</td></tr>
+            <tr><td>Sisi lengkung</td><td>1 (selimut)</td><td>1 (selimut)</td><td>1</td><td>tidak ada</td></tr>
+            <tr><td>Rusuk</td><td>2 rusuk lengkung</td><td>1 rusuk lengkung</td><td>tidak ada</td><td>9</td></tr>
+            <tr><td>Titik sudut</td><td>tidak ada</td><td>1 titik puncak</td><td>tidak ada</td><td>6</td></tr>
+            <tr><td>Ciri khas</td><td>tinggi = jarak alas ke tutup</td><td>garis pelukis = puncak ke keliling alas</td><td>semua titik di permukaan berjarak r dari pusat</td><td>semua sisinya datar</td></tr>
+          </tbody></table></div>
+          <p class="muted">Rusuk adalah pertemuan dua sisi. Ada buku yang menyebut tabung dan kerucut tidak memiliki rusuk karena pertemuannya berupa garis lengkung. Yang pasti tetap sama: banyak sisi datar dan sisi lengkungnya.</p>
+        </section>
         <section class="card"><h3>Ringkasan rumus</h3>
           <div class="rumus">
             <div><span class="k c-tabung">Tabung · volume</span><span class="f">V = πr²t</span></div>
@@ -500,18 +511,18 @@
         <section class="card"><h3>Latihan memilih sisi yang dihitung</h3>
           <p class="muted">Pilih bangun, centang semua bagian yang luasnya dihitung untuk <b>luas permukaan luar</b>, lalu periksa.</p>
           <div class="seg" id="gb-pilih" role="group" aria-label="Pilih bangun">
-            <button type="button" data-g="kapsul" aria-pressed="true">Kapsul</button><button type="button" data-g="tugu" aria-pressed="false">Tugu di lantai</button><button type="button" data-g="kaleng" aria-pressed="false">Kaleng terbuka</button><button type="button" data-g="belahan" aria-pressed="false">Belahan bola padat</button>
+            <button type="button" data-g="kapsul" aria-pressed="true">Kapsul</button><button type="button" data-g="tugu" aria-pressed="false">Tugu di lantai</button><button type="button" data-g="padat" aria-pressed="false">Tabung + kerucut padat</button><button type="button" data-g="kaleng" aria-pressed="false">Kaleng terbuka</button><button type="button" data-g="belahan" aria-pressed="false">Belahan bola padat</button>
           </div>
           <div class="lab"><div class="fig" id="gb-fig"></div><div class="ctrl"><div class="pilih-bagian" id="gb-parts"></div><div class="btns"><button class="btn primary sm" id="gb-cek" type="button">Periksa</button></div><div id="gb-fb"></div></div></div>
         </section>
         ${awas("M3", "Gunakan cara berpikir jaring-jaring: daftar semua sisi bangun, lalu coret sisi yang menempel pada bangun lain atau pada lantai, dan sisi yang memang tidak ada (tanpa tutup). Baru jumlahkan sisanya.")}
         <section class="card"><h3>Langkah menyelesaikan soal konteks</h3>
           <div class="prose"><ol>
-            <li><b>Kenali bangun</b> dan gambar sketsanya. Tulis r (bukan d), t, dan s.</li>
+            <li><b>Kenali bangun</b> dan gambar sketsanya. Tulis r (bukan d), t, dan s. Jika gambar memberi tinggi <i>seluruh</i> bangun, kurangi dengan tinggi bagian lain untuk mendapat tinggi tiap bagian.</li>
             <li><b>Tentukan yang ditanya</b>: volume (isi, air, muatan) atau luas (cat, kertas, bahan).</li>
             <li><b>Samakan satuan</b> sebelum menghitung.</li>
             <li><b>Hitung</b> setiap bagian lalu jumlahkan atau kurangkan.</li>
-            <li><b>Jawab pertanyaan akhir</b>: biaya, waktu, atau banyak wadah. Ubah ke satuan yang diminta.</li>
+            <li><b>Jawab pertanyaan akhir</b>: biaya, waktu, atau banyak wadah. Ubah ke satuan yang diminta. Untuk banyak hari atau wadah yang <i>penuh</i>, bulatkan ke bawah.</li>
           </ol></div>
         </section>
         <details class="contoh"><summary>Contoh soal: waktu mengisi tandon</summary><div class="isi">
@@ -522,6 +533,25 @@
           <div class="soal-contoh">Gelas tabung berdiameter 12 cm berisi air. Kelereng berjari-jari 3 cm dimasukkan sampai tenggelam. Berapa kenaikan air? (π = 3,14)</div>
           <ol class="langkah"><li>Volume kelereng = \\(\\frac{4}{3}\\) × 3,14 × 27 = 113,04 cm³.</li><li>Luas alas gelas = 3,14 × 6² = 113,04 cm².</li><li>Kenaikan = \\(\\dfrac{\\text{volume kelereng}}{\\text{luas alas gelas}}\\) = <b>1 cm</b>.</li></ol>
         </div></details>
+        <details class="contoh"><summary>Contoh soal: membaca ukuran pada gambar bangun gabungan</summary><div class="isi">
+          <div class="soal-contoh">Bangun padat terdiri atas tabung dan kerucut di atasnya. Diameter alas 10 cm, tinggi tabung 6 cm, dan tinggi seluruh bangun 18 cm. Hitung luas permukaannya (π = 3,14).</div>
+          <ol class="langkah"><li>\\(r = \\frac{10}{2} = 5\\) cm. Tinggi kerucut = 18 − 6 = 12 cm (bukan 18 cm).</li><li>s = \\(\\sqrt{5^2 + 12^2} = \\sqrt{169} = 13\\) cm.</li><li>Sisi yang terlihat: alas tabung, selimut tabung, selimut kerucut. Tutup tabung dan alas kerucut saling menempel.</li><li>L = 3,14 × 25 + 2 × 3,14 × 5 × 6 + 3,14 × 5 × 13 = 78,5 + 188,4 + 204,1 = <b>471 cm²</b>.</li></ol>
+          <p class="muted">Jika bangun berdiri di lantai dan yang ditanya bagian yang dicat, alas tabung tidak dihitung.</p>
+        </div></details>
+        <details class="contoh"><summary>Contoh soal: beberapa bola dimasukkan ke dalam air</summary><div class="isi">
+          <div class="soal-contoh">Wadah tabung berjari-jari 10 cm berisi air setinggi 8 cm. Tiga bola berjari-jari 5 cm dimasukkan sampai tenggelam. Berapa tinggi air sekarang? (π = 3,14)</div>
+          <ol class="langkah"><li>Volume 1 bola = \\(\\frac{4}{3}\\) × 3,14 × 125 ≈ 523,33 cm³. Volume 3 bola = 3 × 523,33 ≈ 1.570 cm³.</li><li>Luas alas wadah = 3,14 × 100 = 314 cm².</li><li>Kenaikan = \\(\\frac{1.570}{314} = 5\\) cm.</li><li>Tinggi air sekarang = tinggi awal + kenaikan = 8 + 5 = <b>13 cm</b>.</li></ol>
+          <p class="muted">Kenaikan sebanding dengan banyak bola: 1 bola menaikkan \\(\\frac{1}{3}\\) dari 5 cm, 2 bola dua kali lipatnya, dan seterusnya. Bedakan "kenaikan" dengan "tinggi air sekarang".</p>
+        </div></details>
+        <details class="contoh"><summary>Contoh soal: ruang kosong di sekitar bola dalam tabung</summary><div class="isi">
+          <div class="soal-contoh">Bola berjari-jari 3 cm pas di dalam tabung (menyentuh alas, tutup, dan selimut). Berapa volume ruang kosong di dalam tabung? (π = 3,14)</div>
+          <ol class="langkah"><li>Tabung yang memuat bola pas: r = 3 cm, t = 2r = 6 cm. V tabung = 3,14 × 9 × 6 = 169,56 cm³.</li><li>V bola = \\(\\frac{4}{3}\\) × 3,14 × 27 = 113,04 cm³.</li><li>Ruang kosong = 169,56 − 113,04 = <b>56,52 cm³</b>.</li></ol>
+          <p class="muted">Jalan pintas: bola = \\(\\frac{2}{3}\\) tabung, jadi ruang kosong = \\(\\frac{1}{3}\\) tabung = \\(\\frac{169{,}56}{3}\\) = 56,52 cm³.</p>
+        </div></details>
+        <details class="contoh"><summary>Contoh soal: persediaan air untuk beberapa hari</summary><div class="isi">
+          <div class="soal-contoh">Tandon tabung berjari-jari 0,5 m dan tinggi 1 m terisi penuh. Setiap hari dipakai 60 liter. (a) Cukup untuk berapa hari penuh? (b) Agar cukup 10 hari, berapa liter paling banyak dipakai per hari? (π = 3,14)</div>
+          <ol class="langkah"><li>V = 3,14 × 0,5 × 0,5 × 1 = 0,785 m³ = 785 liter.</li><li>(a) \\(\\frac{785}{60} \\approx 13{,}08\\). Hari ke-14 airnya tidak cukup, jadi <b>13 hari</b> (bulatkan ke bawah).</li><li>(b) \\(\\frac{785}{10} = 78{,}5\\), jadi paling banyak <b>78,5 liter</b> per hari.</li></ol>
+        </div></details>
         <details class="contoh"><summary>Contoh soal: biaya mengecat kubah</summary><div class="isi">
           <div class="soal-contoh">Kubah berbentuk belahan bola berdiameter 14 m dicat bagian luarnya dengan biaya Rp25.000 per m². Berapa biayanya? (π = \\(\\frac{22}{7}\\))</div>
           <ol class="langkah"><li>r = 7 m. Yang dicat hanya kulit lengkung: 2πr² = 2 × 154 = 308 m².</li><li>Biaya = 308 × 25.000 = <b>Rp7.700.000</b>.</li></ol>
@@ -531,6 +561,7 @@
         const DATA = {
           kapsul: [["Selimut tabung", true], ["Dua lingkaran ujung tabung", false, "Ujung tabung tertutup belahan bola, jadi tidak terlihat."], ["Kulit lengkung dua belahan bola (= satu kulit bola utuh)", true], ["Dua alas datar belahan bola", false, "Alas datar belahan bola menempel pada ujung tabung."]],
           tugu: [["Selimut tabung", true], ["Tutup tabung", false, "Tutup tabung tertutup alas kerucut."], ["Alas tabung", false, "Alas tabung menempel di lantai."], ["Selimut kerucut", true], ["Alas kerucut", false, "Alas kerucut menempel pada tutup tabung."]],
+          padat: [["Selimut tabung", true], ["Alas tabung", true, "Bangun tidak diletakkan di lantai, jadi alas tabung terlihat dan dihitung."], ["Tutup tabung", false, "Tutup tabung tertutup alas kerucut."], ["Selimut kerucut", true], ["Alas kerucut", false, "Alas kerucut menempel pada tutup tabung."]],
           kaleng: [["Alas kaleng", true], ["Selimut kaleng", true], ["Tutup kaleng", false, "Kaleng terbuka tidak punya tutup."]],
           belahan: [["Kulit lengkung (2πr²)", true], ["Alas lingkaran datar (πr²)", true, "Belahan bola padat punya alas datar. Totalnya 3πr²."]],
         };

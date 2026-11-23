@@ -89,6 +89,10 @@ const STIMULUS = {
     html: `<p>Tandon air sekolah berbentuk <b>tabung</b> dengan diameter 1,4 m dan tinggi 2 m. Tandon kosong diisi melalui keran dengan debit 7 liter per menit. Gunakan π = \\(\\frac{22}{7}\\).</p>`,
     gambar: "tandon",
   },
+  drum: {
+    judul: "Drum air kebun sekolah",
+    html: `<p>Kebun sekolah memakai drum berbentuk <b>tabung</b> dengan jari-jari alas 28 cm dan tinggi 50 cm untuk menyiram tanaman. Drum diisi penuh, lalu setiap hari dipakai 8 liter air. Gunakan π = \\(\\frac{22}{7}\\).</p>`,
+  },
 };
 
 const SOAL = [
@@ -451,6 +455,84 @@ const SOAL = [
       { v: 5955, mis: "E3", why: "Ini menambahkan dua bola utuh. Dua belahan bola sama dengan satu bola." },
     ],
     pembahasan: "V tabung = 154 × 20 = 3.080 mm³. Dua belahan bola = satu bola = \\(\\frac{4}{3}\\) × \\(\\frac{22}{7}\\) × 343 = 1.437,33 mm³. Total ≈ 4.517 mm³.",
+  },
+
+  /* ---------------- UNSUR & KONTEKS TAMBAHAN ---------------- */
+  {
+    id: "K9", topik: "kerucut", ind: 1, lvl: "P", tipe: "pg",
+    soal: "Unsur-unsur kerucut adalah …",
+    opsi: [
+      { t: "satu sisi datar berbentuk lingkaran, satu sisi lengkung, dan satu titik puncak", benar: true, why: "Tepat. Alas kerucut lingkaran, selimutnya sisi lengkung, dan semua garis pelukis bertemu di titik puncak." },
+      { t: "dua sisi datar berbentuk lingkaran dan satu sisi lengkung", mis: "E4", why: "Itu unsur tabung. Kerucut hanya punya satu sisi datar (alas)." },
+      { t: "satu sisi lengkung saja, tanpa titik puncak", mis: "E4", why: "Itu ciri bola. Kerucut punya alas datar dan titik puncak." },
+      { t: "satu sisi datar berbentuk segitiga dan satu sisi lengkung", mis: "E4", why: "Segitiga hanya tampak jika kerucut dipotong tegak melalui puncaknya. Sisi datar kerucut adalah lingkaran." },
+    ],
+    pembahasan: "Bandingkan: tabung 2 sisi datar + 1 sisi lengkung, kerucut 1 sisi datar + 1 sisi lengkung + 1 titik puncak, bola hanya 1 sisi lengkung.",
+  },
+  {
+    id: "B8", topik: "bola", ind: 1, lvl: "P", tipe: "bs",
+    soal: "Tentukan Benar atau Salah setiap pernyataan tentang unsur bangun ruang sisi lengkung berikut.",
+    pernyataan: [
+      { t: "Bola tidak memiliki titik sudut.", benar: true, why: "Benar. Bola hanya dibatasi satu sisi lengkung, tanpa rusuk dan titik sudut." },
+      { t: "Tabung memiliki satu sisi lengkung.", benar: true, why: "Benar. Sisi lengkung tabung adalah selimutnya." },
+      { t: "Kerucut memiliki dua sisi datar.", benar: false, mis: "E4", why: "Salah. Kerucut hanya punya satu sisi datar, yaitu alas berbentuk lingkaran." },
+      { t: "Garis pelukis kerucut adalah garis dari titik puncak ke pusat alas.", benar: false, mis: "M2", why: "Salah. Garis dari puncak ke pusat alas adalah tinggi. Garis pelukis menghubungkan puncak dengan titik pada keliling alas." },
+    ],
+    pembahasan: "Tinggi kerucut: puncak → pusat alas (tegak lurus). Garis pelukis: puncak → keliling alas. Jari-jari: pusat alas → keliling alas.",
+  },
+  {
+    id: "G10", topik: "gabungan", ind: 4, lvl: "A", tipe: "pg",
+    soal: "Sebuah bangun padat terdiri atas tabung dan kerucut di atasnya. Diameter alas keduanya 12 cm, tinggi tabung 5 cm, dan tinggi <b>seluruh</b> bangun 13 cm. Luas permukaan bangun tersebut adalah … (π = 3,14)",
+    opsi: [
+      { t: "489,84 cm²", benar: true, why: "t kerucut = 13 − 5 = 8 cm, s = 10 cm. Luas = alas tabung 113,04 + selimut tabung 188,4 + selimut kerucut 188,4 = 489,84 cm²." },
+      { t: "452,16 cm²", mis: "M2", why: "Ini memakai tinggi kerucut (8 cm) untuk luas selimut kerucut. Selimut memakai garis pelukis s = 10 cm." },
+      { t: "602,88 cm²", mis: "M3", why: "Ini ikut menghitung tutup tabung, padahal tutup tabung tertutup alas kerucut." },
+      { t: "± 571,18 cm²", mis: "E4", why: "Ini memakai tinggi seluruh bangun (13 cm) sebagai tinggi kerucut. Tinggi kerucut = tinggi seluruh − tinggi tabung." },
+    ],
+    pembahasan: "r = 6 cm. Tinggi kerucut = 13 − 5 = 8 cm, s = " + "\\(\\sqrt{6^2 + 8^2} = 10\\)" + " cm. Bagian yang terlihat: alas tabung (πr² = 113,04), selimut tabung (2πrt = 188,4), selimut kerucut (πrs = 188,4). Total 489,84 cm².",
+  },
+  {
+    id: "G11", topik: "gabungan", ind: 4, lvl: "A", tipe: "isian",
+    soal: "Gelas berbentuk tabung berjari-jari 6 cm berisi air setinggi 5 cm. Dua kelereng berjari-jari 3 cm dimasukkan hingga tenggelam dan air tidak tumpah. Tinggi permukaan air sekarang adalah … cm. (π = 3,14)",
+    jawaban: 7, satuan: "cm",
+    salah: [
+      { v: 2, mis: "E4", why: "2 cm adalah kenaikannya. Tinggi air sekarang = tinggi awal + kenaikan = 5 + 2." },
+      { v: 6, mis: "E4", why: "Ini hanya menghitung satu kelereng. Volume yang masuk = 2 × volume satu kelereng." },
+      { v: 21, mis: "M1", why: "Ini memakai diameter kelereng (6 cm) sebagai jari-jari, sehingga volumenya 8 kali terlalu besar." },
+    ],
+    pembahasan: "Volume 2 kelereng = 2 × \\(\\frac{4}{3}\\) × 3,14 × 27 = 226,08 cm³. Luas alas gelas = 3,14 × 36 = 113,04 cm². Kenaikan = \\(\\frac{226{,}08}{113{,}04} = 2\\) cm. Tinggi air = 5 + 2 = 7 cm.",
+  },
+  {
+    id: "G12", topik: "gabungan", ind: 4, lvl: "A", tipe: "pg",
+    soal: "Sebuah bola berjari-jari 6 cm dimasukkan ke dalam tabung sehingga bola menyentuh alas, tutup, dan selimut tabung. Ruang kosong di dalam tabung akan diisi serbuk kayu. Volume serbuk kayu yang diperlukan adalah … (π = 3,14)",
+    opsi: [
+      { t: "452,16 cm³", benar: true, why: "Tabung r = 6, t = 12: 1.356,48 cm³. Bola: 904,32 cm³. Ruang kosong = 1.356,48 − 904,32 = 452,16 cm³." },
+      { t: "904,32 cm³", mis: "E4", why: "Itu volume bolanya. Yang ditanya ruang kosong = volume tabung − volume bola." },
+      { t: "1.356,48 cm³", mis: "E4", why: "Itu volume tabung seluruhnya. Kurangi dulu dengan volume bola." },
+      { t: "678,24 cm³", mis: "M1", why: "Ini volume tabung jika tingginya hanya 6 cm (jari-jari). Bola menyentuh alas dan tutup, jadi tinggi tabung = diameter bola = 12 cm." },
+    ],
+    pembahasan: "Bola yang pas di dalam tabung: t tabung = 2r. Ruang kosong = πr²(2r) − \\(\\frac{4}{3}\\)πr³ = \\(\\frac{2}{3}\\)πr³ = \\(\\frac{1}{3}\\) volume tabung = \\(\\frac{1.356{,}48}{3} = 452{,}16\\) cm³.",
+  },
+  {
+    id: "G13", topik: "gabungan", ind: 4, lvl: "N", tipe: "pg", grup: "drum",
+    soal: "Jika drum awalnya penuh, air di drum cukup untuk menyiram tanaman selama … hari penuh.",
+    opsi: [
+      { t: "15 hari", benar: true, why: "Volume drum = 123.200 cm³ = 123,2 liter. 123,2 : 8 = 15,4, jadi cukup untuk 15 hari penuh (hari ke-16 airnya kurang)." },
+      { t: "16 hari", mis: "E4", why: "15,4 tidak dibulatkan ke atas. Pada hari ke-16 air hanya tersisa 3,2 liter, kurang dari 8 liter." },
+      { t: "154 hari", mis: "M5", why: "Ini menganggap 1 liter = 100 cm³. Yang benar 1 liter = 1.000 cm³." },
+      { t: "1,54 hari", mis: "M5", why: "Ini menganggap 1 liter = 10.000 cm³. Yang benar 1 liter = 1.000 cm³." },
+    ],
+    pembahasan: "V = " + "\\(\\frac{22}{7}\\)" + " × 28 × 28 × 50 = 123.200 cm³ = 123,2 liter. Banyak hari = \\(\\frac{123{,}2}{8} = 15{,}4\\). Untuk banyak hari penuh, bulatkan ke bawah: 15 hari.",
+  },
+  {
+    id: "G14", topik: "gabungan", ind: 6, lvl: "N", tipe: "isian", grup: "drum",
+    soal: "Agar air dalam drum penuh cukup untuk 14 hari, pemakaian air paling banyak setiap hari adalah … liter.",
+    jawaban: 8.8, tol: 0.01, satuan: "liter",
+    salah: [
+      { v: 88, mis: "M5", why: "Satuan tertukar. 123.200 cm³ = 123,2 liter, bukan 1.232 liter." },
+      { v: 8, mis: "E4", why: "8 liter adalah pemakaian semula. Bagi volume drum dengan 14 hari." },
+    ],
+    pembahasan: "Pemakaian maksimal per hari = \\(\\frac{\\text{volume drum}}{\\text{banyak hari}} = \\frac{123{,}2}{14} = 8{,}8\\) liter.",
   },
 
   /* ---------------- PERUBAHAN UKURAN & PERBANDINGAN ---------------- */
