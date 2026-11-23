@@ -5,6 +5,7 @@
   /* ================= Utilitas ================= */
   const $ = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+  const tx = (x) => fmt(x).replace(",", "{,}");
   const fmt = (x, dp = 2) => (Math.round(x * 10 ** dp) / 10 ** dp).toLocaleString("id-ID", { maximumFractionDigits: dp });
   const h = (html) => { const t = document.createElement("template"); t.innerHTML = html.trim(); return t.content.firstElementChild; };
   const HURUF = "ABCDE";
@@ -32,7 +33,7 @@
   }
 
   const PI = {
-    "22/7": { v: 22 / 7, s: "<sup>22</sup>⁄<sub>7</sub>", txt: "22/7" },
+    "22/7": { v: 22 / 7, s: "\\(\\frac{22}{7}\\)", txt: "22/7" },
     "3,14": { v: 3.14, s: "3,14", txt: "3,14" },
   };
 
@@ -246,13 +247,13 @@
             <div><span class="k c-tabung">Tabung · luas permukaan</span><span class="f">L = 2πr(r + t)</span></div>
             <div><span class="k c-tabung">Tabung · tanpa tutup</span><span class="f">L = πr² + 2πrt</span></div>
             <div><span class="k c-kerucut">Kerucut · garis pelukis</span><span class="f">s² = r² + t²</span></div>
-            <div><span class="k c-kerucut">Kerucut · volume</span><span class="f">V = ⅓πr²t</span></div>
+            <div><span class="k c-kerucut">Kerucut · volume</span><span class="f">V = \\(\\frac{1}{3}\\)πr²t</span></div>
             <div><span class="k c-kerucut">Kerucut · luas permukaan</span><span class="f">L = πr(r + s)</span></div>
-            <div><span class="k c-bola">Bola · volume</span><span class="f">V = ⁴⁄₃πr³</span></div>
+            <div><span class="k c-bola">Bola · volume</span><span class="f">V = \\(\\frac{4}{3}\\)πr³</span></div>
             <div><span class="k c-bola">Bola · luas permukaan</span><span class="f">L = 4πr²</span></div>
             <div><span class="k c-bola">Belahan bola padat · luas</span><span class="f">L = 3πr²</span></div>
           </div>
-          <p class="muted">Pilih π yang efisien: <span class="f"><sup>22</sup>⁄<sub>7</sub></span> jika r (atau d) kelipatan 7, <span class="f">3,14</span> untuk yang lain, kecuali soal menentukan lain.</p>
+          <p class="muted">Pilih π yang efisien: <span class="f">\\(\\frac{22}{7}\\)</span> jika r (atau d) kelipatan 7, <span class="f">3,14</span> untuk yang lain, kecuali soal menentukan lain.</p>
         </section>
         <section class="card"><h3>Kriteria sukses: sampai di mana aku?</h3>
           <p class="muted">Pakai ini untuk menilai diri sendiri. Latihan Mandiri juga memberi perkiraan level di akhir.</p>
@@ -279,11 +280,11 @@
           <p class="lead">Semua rumus bangun ruang sisi lengkung dibangun dari lingkaran. Jika soal kerucut terasa sulit, biasanya yang belum lancar adalah Pythagoras atau luas juring, bukan rumus kerucutnya.</p></div>
         <section class="card"><h3>Lingkaran dan juring</h3>
           <div class="rumus">
-            <div><span class="k">Diameter dan jari-jari</span><span class="f">d = 2r, r = d : 2</span></div>
+            <div><span class="k">Diameter dan jari-jari</span><span class="f">d = 2r, \\(r = \\frac{d}{2}\\)</span></div>
             <div><span class="k">Keliling lingkaran</span><span class="f">K = 2πr = πd</span></div>
             <div><span class="k">Luas lingkaran</span><span class="f">L = πr²</span></div>
-            <div><span class="k">Panjang busur juring</span><span class="f">(α : 360°) × 2πr</span></div>
-            <div><span class="k">Luas juring</span><span class="f">(α : 360°) × πr²</span></div>
+            <div><span class="k">Panjang busur juring</span><span class="f">\\(\\frac{\\alpha}{360^\\circ} \\times 2\\pi r\\)</span></div>
+            <div><span class="k">Luas juring</span><span class="f">\\(\\frac{\\alpha}{360^\\circ} \\times \\pi r^2\\)</span></div>
           </div>
         </section>
         ${awas("M1", "Sebelum menulis rumus, garis bawahi data di soal: apakah yang diberikan <b>jari-jari</b> atau <b>diameter</b>? Jika diameter, bagi 2 dulu. Kesalahan ini membuat volume tabung dan kerucut 4 kali, dan volume bola 8 kali terlalu besar.")}
@@ -345,13 +346,13 @@
         </section>
         ${awas("M3", "Tidak semua tabung punya tutup. Kaleng terbuka = alas + selimut. Pipa = selimut saja. Label kaleng = selimut saja. Tanyakan selalu: sisi mana yang benar-benar ada?")}
         <details class="contoh"><summary>Contoh soal: volume dari diameter</summary><div class="isi">
-          <div class="soal-contoh">Sebuah tabung berdiameter 14 cm dan tinggi 20 cm. Hitung volumenya (π = <sup>22</sup>⁄<sub>7</sub>).</div>
-          <ol class="langkah"><li>Ubah diameter ke jari-jari: r = 14 : 2 = 7 cm.</li><li>Luas alas = <sup>22</sup>⁄<sub>7</sub> × 7 × 7 = 154 cm².</li><li>V = 154 × 20 = <b>3.080 cm³</b>.</li></ol>
+          <div class="soal-contoh">Sebuah tabung berdiameter 14 cm dan tinggi 20 cm. Hitung volumenya (π = \\(\\frac{22}{7}\\)).</div>
+          <ol class="langkah"><li>Ubah diameter ke jari-jari: \\(r = \\frac{14}{2} = 7\\) cm.</li><li>Luas alas = \\(\\frac{22}{7}\\) × 7 × 7 = 154 cm².</li><li>V = 154 × 20 = <b>3.080 cm³</b>.</li></ol>
           <p class="muted">Jika 14 langsung dipakai sebagai r, hasilnya 12.320 cm³ (4 kali terlalu besar).</p>
         </div></details>
         <details class="contoh"><summary>Contoh soal: kerja mundur mencari tinggi</summary><div class="isi">
           <div class="soal-contoh">Volume tabung 1.570 cm³ dan jari-jarinya 5 cm. Berapa tingginya? (π = 3,14)</div>
-          <ol class="langkah"><li>Tulis rumus: V = πr²t.</li><li>Substitusi: 1.570 = 3,14 × 25 × t = 78,5 × t.</li><li>t = 1.570 : 78,5 = <b>20 cm</b>.</li></ol>
+          <ol class="langkah"><li>Tulis rumus: V = πr²t.</li><li>Substitusi: 1.570 = 3,14 × 25 × t = 78,5 × t.</li><li>\\(t = \\frac{1.570}{78{,}5}\\) = <b>20 cm</b>.</li></ol>
         </div></details>`;
       },
       mount(el) {
@@ -397,21 +398,21 @@
         <section class="card"><h3>Dari jaring-jaring ke rumus</h3>
           <div class="prose"><ul>
             <li>Selimut kerucut dibuka menjadi <b>juring</b> berjari-jari <b>s</b>. Panjang busurnya sama dengan keliling alas, 2πr.</li>
-            <li>Luas juring = (busur : keliling lingkaran besar) × luas lingkaran besar = <span class="f">(2πr : 2πs) × πs² = πrs</span>.</li>
-            <li>Sudut pusat juring = <span class="f">(r : s) × 360°</span>.</li>
+            <li>Luas juring = \\(\\dfrac{\\text{panjang busur}}{\\text{keliling lingkaran besar}}\\) × luas lingkaran besar = \\(\\dfrac{2\\pi r}{2\\pi s} \\times \\pi s^2 = \\pi r s\\).</li>
+            <li>Sudut pusat juring = \\(\\dfrac{r}{s} \\times 360^\\circ\\).</li>
             <li><b>Luas permukaan</b> = alas + selimut = <span class="f">πr² + πrs = πr(r + s)</span>.</li>
-            <li><b>Volume</b> = ⅓ × volume tabung dengan alas dan tinggi sama = <span class="f">⅓πr²t</span>. Tiga kerucut penuh air tepat mengisi satu tabung.</li>
+            <li><b>Volume</b> = \\(\\frac{1}{3}\\) × volume tabung dengan alas dan tinggi sama = <span class="f">\\(\\frac{1}{3}\\)πr²t</span>. Tiga kerucut penuh air tepat mengisi satu tabung.</li>
           </ul></div>
         </section>
         ${awas("M2", "<b>Luas selimut memakai s</b> (karena juringnya berjari-jari s). <b>Volume memakai t</b> (karena volume = luas alas × tinggi). Jika soal hanya memberi salah satu, cari yang lain dengan Pythagoras.")}
         <details class="contoh"><summary>Contoh soal: volume dari diameter dan garis pelukis</summary><div class="isi">
           <div class="soal-contoh">Kerucut berdiameter 12 cm dan bergaris pelukis 10 cm. Hitung volumenya (π = 3,14).</div>
-          <ol class="langkah"><li>r = 12 : 2 = 6 cm.</li><li>t = √(10² − 6²) = √64 = 8 cm.</li><li>V = ⅓ × 3,14 × 36 × 8 = <b>301,44 cm³</b>.</li></ol>
-          <p class="muted">Pengecoh yang biasa muncul: 376,8 (s dipakai sebagai t), 904,32 (lupa ⅓), 1.205,76 (d dipakai sebagai r).</p>
+          <ol class="langkah"><li>\\(r = \\frac{12}{2} = 6\\) cm.</li><li>t = √(10² − 6²) = √64 = 8 cm.</li><li>V = \\(\\frac{1}{3}\\) × 3,14 × 36 × 8 = <b>301,44 cm³</b>.</li></ol>
+          <p class="muted">Pengecoh yang biasa muncul: 376,8 (s dipakai sebagai t), 904,32 (lupa \\(\\frac{1}{3}\\)), 1.205,76 (d dipakai sebagai r).</p>
         </div></details>
         <details class="contoh"><summary>Contoh soal: luas selimut</summary><div class="isi">
-          <div class="soal-contoh">Kerucut berjari-jari 7 cm dan tinggi 24 cm. Hitung luas selimutnya (π = <sup>22</sup>⁄<sub>7</sub>).</div>
-          <ol class="langkah"><li>s = √(7² + 24²) = √625 = 25 cm.</li><li>L selimut = πrs = <sup>22</sup>⁄<sub>7</sub> × 7 × 25 = <b>550 cm²</b>.</li></ol>
+          <div class="soal-contoh">Kerucut berjari-jari 7 cm dan tinggi 24 cm. Hitung luas selimutnya (π = \\(\\frac{22}{7}\\)).</div>
+          <ol class="langkah"><li>s = √(7² + 24²) = √625 = 25 cm.</li><li>L selimut = πrs = \\(\\frac{22}{7}\\) × 7 × 25 = <b>550 cm²</b>.</li></ol>
         </div></details>`;
       },
       mount(el) {
@@ -424,10 +425,10 @@
           const bulat = Math.abs(s - Math.round(s)) < 1e-9;
           $("#kr-hasil", el).innerHTML =
             row("Garis pelukis s", `${fmt(s)} cm`, `√(${fmt(r)}² + ${fmt(t)}²) = √${fmt(r * r + t * t)}${bulat ? "" : " (bukan bilangan bulat)"}`) +
-            row("Sudut juring", `${fmt((360 * r) / s, 1)}°`, `(${fmt(r)} : ${fmt(s)}) × 360°`) +
+            row("Sudut juring", `${fmt((360 * r) / s, 1)}°`, `\\(\\frac{${tx(r)}}{${tx(s)}} \\times 360^\\circ\\)`) +
             row("Luas selimut", `${fmt(sel)} cm²`, `${P.s} × ${fmt(r)} × ${fmt(s)} (pakai s)`) +
             row("Luas permukaan", `${fmt(alas + sel)} cm²`, `alas ${fmt(alas)} + selimut ${fmt(sel)}`) +
-            row("Volume", `${fmt(v)} cm³`, `⅓ × ${P.s} × ${fmt(r)}² × ${fmt(t)} (pakai t)`);
+            row("Volume", `${fmt(v)} cm³`, `\\(\\frac{1}{3}\\) × ${P.s} × ${fmt(r)}² × ${fmt(t)} (pakai t)`);
         };
         $("#kr-r", el).addEventListener("input", (e) => { st.r = +e.target.value; up(); });
         $("#kr-t", el).addEventListener("input", (e) => { st.t = +e.target.value; up(); });
@@ -456,18 +457,18 @@
         <section class="card"><h3>Asal rumus bola</h3>
           <div class="prose"><ul>
             <li><b>Luas permukaan</b>: kulit satu jeruk, jika dikupas dan disusun, dapat menutupi tepat 4 lingkaran berjari-jari sama dengan jeruk. Jadi <span class="f">L = 4πr²</span>.</li>
-            <li><b>Volume</b>: bola yang pas di dalam tabung (r sama, tinggi 2r) mengisi ⅔ tabung. <span class="f">V = ⅔ × πr² × 2r = ⁴⁄₃πr³</span>.</li>
+            <li><b>Volume</b>: bola yang pas di dalam tabung (r sama, tinggi 2r) mengisi \\(\\frac{2}{3}\\) tabung. <span class="f">V = \\(\\frac{2}{3}\\) × πr² × 2r = \\(\\frac{4}{3}\\)πr³</span>.</li>
             <li><b>Belahan bola padat</b> punya kulit lengkung 2πr² dan alas datar πr², jadi <span class="f">L = 3πr²</span>. Mangkuk atau kubah tanpa alas hanya <span class="f">2πr²</span>.</li>
           </ul></div>
         </section>
         ${awas("M1", "Pada bola, kesalahan memakai diameter sebagai jari-jari paling mahal: volume menjadi <b>8 kali</b> lebih besar karena r dipangkatkan tiga.")}
-        <details class="contoh"><summary>Contoh soal: volume bola dengan π = <sup>22</sup>⁄<sub>7</sub></summary><div class="isi">
+        <details class="contoh"><summary>Contoh soal: volume bola dengan π = \\(\\frac{22}{7}\\)</summary><div class="isi">
           <div class="soal-contoh">Bola berdiameter 42 cm. Hitung volumenya.</div>
-          <ol class="langkah"><li>r = 21 cm.</li><li>V = ⁴⁄₃ × <sup>22</sup>⁄<sub>7</sub> × 21 × 21 × 21.</li><li>Sederhanakan dulu: 21 : 7 = 3 dan 3 : 3 = 1, jadi V = 4 × 22 × 21 × 21 = <b>38.808 cm³</b>.</li></ol>
+          <ol class="langkah"><li>r = 21 cm.</li><li>V = \\(\\frac{4}{3}\\) × \\(\\frac{22}{7}\\) × 21 × 21 × 21.</li><li>Sederhanakan dulu: \\(\\frac{21}{7} = 3\\) dan \\(\\frac{3}{3} = 1\\), jadi V = 4 × 22 × 21 × 21 = <b>38.808 cm³</b>.</li></ol>
         </div></details>
         <details class="contoh"><summary>Contoh soal: mencari jari-jari dari volume</summary><div class="isi">
           <div class="soal-contoh">Volume bola 113,04 cm³ (π = 3,14). Berapa jari-jarinya?</div>
-          <ol class="langkah"><li>113,04 = ⁴⁄₃ × 3,14 × r³.</li><li>r³ = 113,04 × 3 : (4 × 3,14) = 339,12 : 12,56 = 27.</li><li>r = ∛27 = <b>3 cm</b>.</li></ol>
+          <ol class="langkah"><li>113,04 = \\(\\frac{4}{3}\\) × 3,14 × r³.</li><li>\\(r^3 = \\frac{113{,}04 \\times 3}{4 \\times 3{,}14} = \\frac{339{,}12}{12{,}56} = 27\\).</li><li>r = ∛27 = <b>3 cm</b>.</li></ol>
         </div></details>`;
       },
       mount(el) {
@@ -479,10 +480,10 @@
           const L = 4 * P.v * r * r, V = (4 / 3) * P.v * r ** 3;
           $("#bl-hasil", el).innerHTML =
             row("Luas permukaan bola", `${fmt(L)} cm²`, `4 × ${P.s} × ${fmt(r)}²`) +
-            row("Volume bola", `${fmt(V)} cm³`, `⁴⁄₃ × ${P.s} × ${fmt(r)}³`) +
+            row("Volume bola", `${fmt(V)} cm³`, `\\(\\frac{4}{3}\\) × ${P.s} × ${fmt(r)}³`) +
             row("Belahan bola padat · luas", `${fmt((3 / 4) * L)} cm²`, `3 × ${P.s} × ${fmt(r)}²`) +
             row("Kubah / mangkuk · luas", `${fmt(L / 2)} cm²`, `2 × ${P.s} × ${fmt(r)}²`) +
-            row("Belahan bola · volume", `${fmt(V / 2)} cm³`, `⅔ × ${P.s} × ${fmt(r)}³`);
+            row("Belahan bola · volume", `${fmt(V / 2)} cm³`, `\\(\\frac{2}{3}\\) × ${P.s} × ${fmt(r)}³`);
         };
         $("#bl-r", el).addEventListener("input", (e) => { st.r = +e.target.value; up(); });
         segBind(el, "#bl-pi", (b) => { st.pi = b.dataset.pi; up(); });
@@ -514,15 +515,15 @@
           </ol></div>
         </section>
         <details class="contoh"><summary>Contoh soal: waktu mengisi tandon</summary><div class="isi">
-          <div class="soal-contoh">Tandon berbentuk tabung berdiameter 1,4 m dan tinggi 2 m diisi dengan debit 7 liter per menit. Berapa lama sampai penuh? (π = <sup>22</sup>⁄<sub>7</sub>)</div>
-          <ol class="langkah"><li>r = 0,7 m. V = <sup>22</sup>⁄<sub>7</sub> × 0,7 × 0,7 × 2 = 3,08 m³.</li><li>3,08 m³ = 3,08 × 1.000 = 3.080 liter.</li><li>Waktu = 3.080 : 7 = 440 menit = <b>7 jam 20 menit</b>.</li></ol>
+          <div class="soal-contoh">Tandon berbentuk tabung berdiameter 1,4 m dan tinggi 2 m diisi dengan debit 7 liter per menit. Berapa lama sampai penuh? (π = \\(\\frac{22}{7}\\))</div>
+          <ol class="langkah"><li>r = 0,7 m. V = \\(\\frac{22}{7}\\) × 0,7 × 0,7 × 2 = 3,08 m³.</li><li>3,08 m³ = 3,08 × 1.000 = 3.080 liter.</li><li>Waktu = \\(\\frac{3.080}{7} = 440\\) menit = <b>7 jam 20 menit</b>.</li></ol>
         </div></details>
         <details class="contoh"><summary>Contoh soal: kenaikan air saat bola dimasukkan</summary><div class="isi">
           <div class="soal-contoh">Gelas tabung berdiameter 12 cm berisi air. Kelereng berjari-jari 3 cm dimasukkan sampai tenggelam. Berapa kenaikan air? (π = 3,14)</div>
-          <ol class="langkah"><li>Volume kelereng = ⁴⁄₃ × 3,14 × 27 = 113,04 cm³.</li><li>Luas alas gelas = 3,14 × 6² = 113,04 cm².</li><li>Kenaikan = volume kelereng : luas alas gelas = <b>1 cm</b>.</li></ol>
+          <ol class="langkah"><li>Volume kelereng = \\(\\frac{4}{3}\\) × 3,14 × 27 = 113,04 cm³.</li><li>Luas alas gelas = 3,14 × 6² = 113,04 cm².</li><li>Kenaikan = \\(\\dfrac{\\text{volume kelereng}}{\\text{luas alas gelas}}\\) = <b>1 cm</b>.</li></ol>
         </div></details>
         <details class="contoh"><summary>Contoh soal: biaya mengecat kubah</summary><div class="isi">
-          <div class="soal-contoh">Kubah berbentuk belahan bola berdiameter 14 m dicat bagian luarnya dengan biaya Rp25.000 per m². Berapa biayanya? (π = <sup>22</sup>⁄<sub>7</sub>)</div>
+          <div class="soal-contoh">Kubah berbentuk belahan bola berdiameter 14 m dicat bagian luarnya dengan biaya Rp25.000 per m². Berapa biayanya? (π = \\(\\frac{22}{7}\\))</div>
           <ol class="langkah"><li>r = 7 m. Yang dicat hanya kulit lengkung: 2πr² = 2 × 154 = 308 m².</li><li>Biaya = 308 × 25.000 = <b>Rp7.700.000</b>.</li></ol>
         </div></details>`;
       },
