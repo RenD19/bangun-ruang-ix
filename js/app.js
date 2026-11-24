@@ -86,7 +86,6 @@
     const meta = [];
     if (opt.nomor) meta.push(`<span class="chip">Soal ${opt.nomor}</span>`);
     meta.push(`<span class="chip tipe">${TIPE_LABEL[q.tipe]}</span>`);
-    if (opt.meta !== false && q.lvl) meta.push(`<span class="chip">${LEVEL[q.lvl]}</span>`);
     if (opt.meta !== false && TOPIK[q.topik]) meta.push(`<span class="chip">${TOPIK[q.topik]}</span>`);
     el.append(h(`<div class="q-meta">${meta.join("")}</div>`));
     if (q.grup && STIMULUS[q.grup] && opt.stimulus !== false) {
@@ -154,7 +153,7 @@
           if (tunjuk) {
             let pre = "";
             if (q.tipe === "pgk") pre = o.benar ? (dipilih ? "✓ Benar dipilih. " : "✗ Seharusnya dipilih. ") : (dipilih ? "✗ Seharusnya tidak dipilih. " : "✓ Tepat tidak dipilih. ");
-            lab.append(h(`<span class="fb">${pre}${o.why || ""}${!o.benar && o.mis && dipilih ? ` <span class="muted">(${o.mis})</span>` : ""}</span>`));
+            lab.append(h(`<span class="fb">${pre}${o.why || ""}</span>`));
           }
         });
       } else if (q.tipe === "bs") {
@@ -174,7 +173,7 @@
       }
       hasil.mis.forEach((m) => {
         const M = MISKONSEPSI[m];
-        if (M) html += `<div class="mis-tag"><b>${m}</b><span>Kemungkinan miskonsepsi: ${M.nama}</span></div>`;
+        if (M) html += `<div class="mis-tag"><span>Kemungkinan penyebab: <b>${M.nama.toLowerCase()}</b></span></div>`;
       });
       if (q.pembahasan) html += `<div><b>Pembahasan:</b> ${q.pembahasan}</div>`;
       html += `</div>`;
@@ -213,7 +212,7 @@
   const piSeg = (id, pilih) => `<div class="seg" role="group" aria-label="Nilai π" id="${id}">${Object.keys(PI).map((k) => `<button type="button" data-pi="${k}" aria-pressed="${k === pilih}">π = ${k}</button>`).join("")}</div>`;
   const slider = (id, label, min, max, step, val) => `<div class="slider"><label for="${id}"><span>${label}</span><output id="${id}-o">${fmt(val)} cm</output></label><input type="range" id="${id}" min="${min}" max="${max}" step="${step}" value="${val}"></div>`;
   const row = (nama, nilaiStr, sub) => `<div class="row"><b>${nama}</b><span class="v">${nilaiStr}</span><span class="s">${sub}</span></div>`;
-  const awas = (kode, isi) => `<div class="awas"><span class="tag">AWAS · ${kode}</span><h4>${MISKONSEPSI[kode].nama}</h4><p>${isi}</p></div>`;
+  const awas = (kode, isi) => `<div class="awas"><span class="tag">AWAS</span><h4>${MISKONSEPSI[kode].nama}</h4><p>${isi}</p></div>`;
 
   function segBind(root, sel, cb) {
     const seg = $(sel, root);
@@ -275,10 +274,10 @@
             <div><span class="lvl-pill lv4">Mendalam</span><p>Aku menalar perubahan ukuran tanpa menghitung ulang, menilai pernyataan benar/salah, dan menemukan kesalahan pada penyelesaian orang lain.</p></div>
           </div>
         </section>
-        <section class="card"><h3>Lima miskonsepsi yang paling sering terjadi</h3>
-          <p class="muted">Pengecoh di Latihan Mandiri dibuat dari kesalahan-kesalahan ini. Jika kamu memilih pengecoh, umpan baliknya akan menyebut kodenya.</p>
-          <div class="tbl-wrap"><table class="tbl"><thead><tr><th>Kode</th><th>Miskonsepsi</th><th>Pelajari di</th></tr></thead><tbody>
-            ${["M1", "M2", "M3", "M4", "M5"].map((k) => `<tr><td class="num">${k}</td><td>${MISKONSEPSI[k].nama}</td><td><a href="#belajar-${MISKONSEPSI[k].bagian}">${BAB_NAMA[MISKONSEPSI[k].bagian]}</a></td></tr>`).join("")}
+        <section class="card"><h3>Lima kesalahan yang paling sering terjadi</h3>
+          <p class="muted">Hindari kesalahan-kesalahan ini. Jika jawabanmu di Latihan Mandiri mengarah ke salah satunya, umpan balik akan memberi tahu dan menunjukkan bagian yang perlu dipelajari lagi.</p>
+          <div class="tbl-wrap"><table class="tbl"><thead><tr><th>Kesalahan</th><th>Pelajari di</th></tr></thead><tbody>
+            ${["M1", "M2", "M3", "M4", "M5"].map((k) => `<tr><td>${MISKONSEPSI[k].nama}</td><td><a href="#belajar-${MISKONSEPSI[k].bagian}">${BAB_NAMA[MISKONSEPSI[k].bagian]}</a></td></tr>`).join("")}
           </tbody></table></div>
         </section>`;
       },
@@ -583,7 +582,7 @@
             if (c === p[1]) benar++; else catatan.push(p[2] || (p[1] ? `${p[0]} terlihat dari luar, jadi dihitung.` : ""));
           });
           const semua = benar === DATA[jenis].length;
-          fb.innerHTML = `<div class="umpan ${semua ? "ok" : "no"}"><div class="judul">${semua ? "Tepat semua!" : `${benar} dari ${DATA[jenis].length} tepat`}</div>${catatan.filter(Boolean).map((c) => `<div>${c}</div>`).join("")}${semua ? "" : `<div class="mis-tag"><b>M3</b><span>${MISKONSEPSI.M3.nama}</span></div>`}</div>`;
+          fb.innerHTML = `<div class="umpan ${semua ? "ok" : "no"}"><div class="judul">${semua ? "Tepat semua!" : `${benar} dari ${DATA[jenis].length} tepat`}</div>${catatan.filter(Boolean).map((c) => `<div>${c}</div>`).join("")}${semua ? "" : `<div class="mis-tag"><span>Kemungkinan penyebab: <b>${MISKONSEPSI.M3.nama.toLowerCase()}</b></span></div>`}</div>`;
         });
         up();
       },
@@ -650,7 +649,7 @@
           $$("#pu-opsi button", el).forEach((b) => b.addEventListener("click", () => {
             const c = +b.dataset.c, ok = Math.abs(c - benar) < 1e-6;
             tebak = true;
-            $("#pu-fb", el).innerHTML = `<div class="umpan ${ok ? "ok" : "no"}" style="margin-top:10px"><div class="judul">${ok ? "Prediksimu tepat!" : "Belum tepat"}</div><div>${f.rumus}, jadi volumenya menjadi ${fmt(benar, 3)} kali.</div>${ok ? "" : `<div class="mis-tag"><b>M4</b><span>${MISKONSEPSI.M4.nama}</span></div>`}</div>`;
+            $("#pu-fb", el).innerHTML = `<div class="umpan ${ok ? "ok" : "no"}" style="margin-top:10px"><div class="judul">${ok ? "Prediksimu tepat!" : "Belum tepat"}</div><div>${f.rumus}, jadi volumenya menjadi ${fmt(benar, 3)} kali.</div>${ok ? "" : `<div class="mis-tag"><span>Kemungkinan penyebab: <b>${MISKONSEPSI.M4.nama.toLowerCase()}</b></span></div>`}</div>`;
             renderHasil(true);
           }));
         };
@@ -1010,14 +1009,14 @@
           <span class="eyebrow">Hasil ${{ topik: "latihan per topik", sumatif: "simulasi sumatif", ulang: "latihan ulang" }[kuis.mode]}</span>
           <h2>Perkiraan level: <span class="lvl-pill ${lv.cls}" style="font-size:1rem">${lv.nama}</span></h2>
           <p>${lv.saran}</p>
-          <p class="muted">Perkiraan ini dihitung dari persentase benar pada tiap level kognitif. Gunakan sebagai panduan, bukan nilai rapor.</p>
+          <p class="muted">Perkiraan ini dihitung dari persentase benar pada tiap jenis soal. Gunakan sebagai panduan, bukan nilai rapor.</p>
         </div></div></section>
       <div class="stat-grid">
         <section class="card"><h3>Per topik</h3><div class="meter">${meter(perTopik, TOPIK)}</div></section>
-        <section class="card"><h3>Per level kognitif</h3><div class="meter">${meter(perLvl, LEVEL)}</div></section>
+        <section class="card"><h3>Per jenis soal</h3><div class="meter">${meter(perLvl, LEVEL)}</div></section>
       </div>
-      <section class="card"><h3>Diagnosis miskonsepsi</h3>
-        ${misUrut.length ? `<p class="muted">Jawaban salahmu paling banyak cocok dengan kesalahan berikut. Mulailah dari yang teratas.</p><div class="mis-list">${misUrut.map(([m, ids]) => `<div class="mis-item"><div class="h"><b class="f">${m}</b><b>${MISKONSEPSI[m].nama}</b><span class="cnt">${ids.length} soal (no. ${ids.map(nomorDari).join(", ")})</span></div><p>${MISKONSEPSI[m].jelas}</p><a href="#belajar-${MISKONSEPSI[m].bagian}">Pelajari lagi di bab ${BAB_NAMA[MISKONSEPSI[m].bagian]} →</a></div>`).join("")}</div>` : `<p>${benar === total ? "Tidak ada jawaban salah. Hebat!" : "Jawaban salahmu tidak cocok dengan pola miskonsepsi tertentu. Baca pembahasan di bawah untuk melihat letak kesalahannya."}</p>`}
+      <section class="card"><h3>Yang perlu diperbaiki</h3>
+        ${misUrut.length ? `<p class="muted">Jawaban salahmu paling banyak cocok dengan kesalahan berikut. Mulailah dari yang teratas.</p><div class="mis-list">${misUrut.map(([m, ids]) => `<div class="mis-item"><div class="h"><b>${MISKONSEPSI[m].nama}</b><span class="cnt">${ids.length} soal (no. ${ids.map(nomorDari).join(", ")})</span></div><p>${MISKONSEPSI[m].jelas}</p><a href="#belajar-${MISKONSEPSI[m].bagian}">Pelajari lagi di bab ${BAB_NAMA[MISKONSEPSI[m].bagian]} →</a></div>`).join("")}</div>` : `<p>${benar === total ? "Tidak ada jawaban salah. Hebat!" : "Jawaban salahmu tidak cocok dengan pola miskonsepsi tertentu. Baca pembahasan di bawah untuk melihat letak kesalahannya."}</p>`}
       </section>
       <section class="card"><h3>Pembahasan tiap soal</h3><p class="muted">Klik soal untuk melihat jawabanmu dan pembahasannya.</p><div class="review" id="h-review"></div></section>
       <div class="btns"><button class="btn primary" id="h-lagi" type="button">Kembali ke menu latihan</button>${store.get("salah", []).length ? `<button class="btn" id="h-ulang" type="button">Ulangi soal yang salah</button>` : ""}</div>
