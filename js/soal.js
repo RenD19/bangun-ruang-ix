@@ -95,6 +95,13 @@ const STIMULUS = {
   },
 };
 
+/* Soal yang ikut tampil sesuai pengaturan FITUR (js/config.js) */
+function soalAktif(q) {
+  const f = typeof FITUR !== "undefined" ? FITUR : { perubahanUkuran: true };
+  if (!f.perubahanUkuran && (q.skala || q.topik === "perubahan")) return false;
+  return true;
+}
+
 const SOAL = [
   /* ---------------- TABUNG ---------------- */
   {
@@ -153,7 +160,7 @@ const SOAL = [
     pembahasan: "Kerja mundur: V = πr²t ⇒ 1.570 = 3,14 × 25 × t = 78,5 × t ⇒ \\(t = \\frac{1.570}{78{,}5} = 20\\) cm.",
   },
   {
-    id: "T6", topik: "tabung", ind: 5, lvl: "N", tipe: "bs",
+    id: "T6", topik: "tabung", skala: true, ind: 5, lvl: "N", tipe: "bs",
     soal: "Sebuah tabung memiliki jari-jari 7 cm dan tinggi 10 cm (π = \\(\\frac{22}{7}\\)). Tentukan Benar atau Salah setiap pernyataan berikut.",
     pernyataan: [
       { t: "Luas selimut tabung adalah 440 cm².", benar: true, why: "2πrt = 2 × \\(\\frac{22}{7}\\) × 7 × 10 = 440 cm²." },
@@ -323,7 +330,7 @@ const SOAL = [
     pembahasan: "113,04 = \\(\\frac{4}{3}\\) × 3,14 × r³ ⇒ \\(r^3 = \\frac{113{,}04 \\times 3}{4 \\times 3{,}14} = \\frac{339{,}12}{12{,}56} = 27\\) ⇒ r = ∛27 = 3 cm.",
   },
   {
-    id: "B5", topik: "bola", ind: 5, lvl: "N", tipe: "bs",
+    id: "B5", topik: "bola", skala: true, ind: 5, lvl: "N", tipe: "bs",
     soal: "Tentukan Benar atau Salah setiap pernyataan tentang bola berikut.",
     pernyataan: [
       { t: "Jika jari-jari bola dijadikan 2 kali, luas permukaannya menjadi 4 kali.", benar: true, why: "L = 4πr² sebanding dengan r², jadi 2² = 4 kali." },
@@ -559,7 +566,7 @@ const SOAL = [
     pembahasan: "V baru = π(2r)²(\\(\\frac{1}{2}\\)t) = π × 4r² × \\(\\frac{1}{2}\\)t = 2πr²t = 2 × V lama.",
   },
   {
-    id: "P3", topik: "perubahan", ind: 5, lvl: "N", tipe: "pgk",
+    id: "P3", topik: "bola", ind: 5, lvl: "N", tipe: "pgk",
     soal: "Sebuah tabung, kerucut, dan bola memiliki jari-jari r yang sama. Tinggi tabung dan tinggi kerucut sama dengan 2r. Pilih <b>semua</b> pernyataan yang benar.",
     opsi: [
       { t: "V tabung : V kerucut = 3 : 1", benar: true, why: "Benar. Alas dan tinggi sama, jadi kerucut = \\(\\frac{1}{3}\\) tabung." },
@@ -593,7 +600,7 @@ const SOAL = [
     pembahasan: "V₁ : V₂ = \\(\\frac{4}{3}\\)πr₁³ : \\(\\frac{4}{3}\\)πr₂³ = r₁³ : r₂³ = 8 : 27.",
   },
   {
-    id: "P6", topik: "perubahan", ind: 6, lvl: "N", tipe: "pg",
+    id: "P6", topik: "kerucut", ind: 6, lvl: "N", tipe: "pg",
     soal: "Rani menghitung volume kerucut berdiameter 14 cm dan tinggi 9 cm sebagai berikut:<br><span class=\"f\">V = \\(\\frac{1}{3}\\) × \\(\\frac{22}{7}\\) × 14 × 14 × 9 = 1.848 cm³</span><br>Pernyataan yang tepat tentang pekerjaan Rani adalah …",
     opsi: [
       { t: "Rani salah karena memakai diameter sebagai jari-jari. Volume yang benar 462 cm³.", benar: true, why: "Tepat. r = 7 cm, V = \\(\\frac{1}{3}\\) × 154 × 9 = 462 cm³." },
@@ -604,7 +611,7 @@ const SOAL = [
     pembahasan: "Menemukan kesalahan: cek data (r atau d?), cek rumus (\\(\\frac{1}{3}\\) ada?), cek satuan. Di sini \\(r = \\frac{14}{2} = 7\\) cm, jadi V = \\(\\frac{1}{3}\\) × \\(\\frac{22}{7}\\) × 49 × 9 = 462 cm³.",
   },
   {
-    id: "P7", topik: "perubahan", ind: 6, lvl: "N", tipe: "bs",
+    id: "P7", topik: "perubahan", skala: true, ind: 6, lvl: "N", tipe: "bs",
     soal: "Tentukan Benar atau Salah setiap pernyataan berikut.",
     pernyataan: [
       { t: "Jika jari-jari bola dikali k, volumenya dikali k³.", benar: true, why: "Benar. Ini generalisasi dari V = \\(\\frac{4}{3}\\)πr³." },
@@ -615,7 +622,7 @@ const SOAL = [
     pembahasan: "Hafalkan tangga satuan volume: 1 m³ = 1.000 dm³ = 1.000.000 cm³, dan 1 dm³ = 1 liter = 1.000 ml = 1.000 cm³.",
   },
   {
-    id: "P8", topik: "perubahan", ind: 5, lvl: "A", tipe: "isian",
+    id: "P8", topik: "kerucut", ind: 5, lvl: "A", tipe: "isian",
     soal: "Sebuah tabung berisi penuh air. Air itu akan dituang ke gelas-gelas berbentuk kerucut yang jari-jari dan tingginya sama dengan tabung. Banyak gelas kerucut yang dapat diisi penuh adalah … gelas.",
     jawaban: 3, satuan: "gelas",
     salah: [
@@ -746,14 +753,14 @@ const CEK = {
   gabungan: [
     {
       id: "C-G1", tipe: "pg", lvl: "A", topik: "gabungan",
-      soal: "Sebuah tugu terdiri atas tabung (r = 7 cm, t = 10 cm) dengan kerucut (r = 7 cm, t = 24 cm) di atasnya. Tugu berdiri di lantai. Bagian luar tugu, kecuali alas yang menempel di lantai, dicat. Luas yang dicat adalah … (π = \\(\\frac{22}{7}\\))",
+      soal: "Sebuah kapsul terdiri atas tabung (r = 3 mm, t = 10 mm) dengan belahan bola di kedua ujungnya. Volume kapsul adalah … (π = 3,14)",
       opsi: [
-        { t: "990 cm²", benar: true, why: "Selimut tabung 440 + selimut kerucut 550 = 990 cm². Tutup tabung tertutup kerucut, alas tabung menempel di lantai." },
-        { t: "1.144 cm²", mis: "M3", why: "Ini menambahkan satu lingkaran (154 cm²). Alas tabung di lantai dan tutup tabung di bawah kerucut tidak terlihat." },
-        { t: "1.298 cm²", mis: "M3", why: "Ini menambahkan dua lingkaran. Keduanya tidak terlihat dari luar." },
-        { t: "968 cm²", mis: "M2", why: "Ini memakai tinggi kerucut (24 cm) untuk luas selimut kerucut. Seharusnya s = 25 cm." },
+        { t: "395,64 mm³", benar: true, why: "Volume tabung 282,6 + dua belahan bola (= satu bola utuh) 113,04 = 395,64 mm³." },
+        { t: "508,68 mm³", mis: "E3", why: "Ini menghitung dua bola utuh. Dua belahan bola hanya sama dengan satu bola." },
+        { t: "339,12 mm³", mis: "E3", why: "Ini hanya menambahkan satu belahan bola. Kapsul punya belahan bola di kedua ujung." },
+        { t: "301,44 mm²", mis: "E2", why: "Ini luas permukaan kapsul (2πrt + 4πr²), bukan volume." },
       ],
-      pembahasan: "s kerucut = √(49 + 576) = 25 cm. Selimut kerucut = \\(\\frac{22}{7}\\) × 7 × 25 = 550 cm². Selimut tabung = 2 × \\(\\frac{22}{7}\\) × 7 × 10 = 440 cm². Total = 990 cm².",
+      pembahasan: "V tabung = 3,14 × 3² × 10 = 282,6 mm³. Dua belahan bola = satu bola = \\(\\frac{4}{3}\\) × 3,14 × 3³ = 113,04 mm³. Total = 395,64 mm³.",
     },
   ],
   perubahan: [

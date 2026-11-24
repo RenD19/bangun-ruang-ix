@@ -3,6 +3,10 @@
  * Warna diambil dari variabel CSS (--tabung, --kerucut, --bola, --ink). */
 const Gambar = (() => {
   const W = 340, H = 280;
+  /* Skala tetap (piksel per cm). Gambar tidak diskalakan otomatis, jadi
+     mengubah satu ukuran hanya mengubah bagian itu di gambar.
+     Rentang slider: r 1-10 cm, t 1-20 cm. */
+  const SKALA = { bangun: 9, bola: 10, jaringTabung: 4.3, jaringKerucut: 3.8 };
   const n = (x) => Math.round(x * 10) / 10;
   const fmt = (x, dp = 2) => (Math.round(x * 10 ** dp) / 10 ** dp).toLocaleString("id-ID", { maximumFractionDigits: dp });
 
@@ -18,9 +22,9 @@ const Gambar = (() => {
 
   /* ---------- Tabung ---------- */
   function tabung(r, t, opt = {}) {
-    const k = Math.min(200 / (2 * r), 190 / (t + 0.6 * r));
+    const k = SKALA.bangun;
     const rx = r * k, ry = rx * 0.3, h = t * k;
-    const cx = W / 2 - 10, top = (H - h) / 2, bot = top + h;
+    const cx = W / 2 - 10, bot = 238, top = bot - h;
     const c = "var(--tabung)";
     let s = "";
     s += `<path d="M ${n(cx - rx)} ${n(top)} L ${n(cx - rx)} ${n(bot)} ${ellipseHalf(cx, bot, rx, ry, true).replace("M", "L")} L ${n(cx + rx)} ${n(top)} Z" fill="var(--tabung-soft)" stroke="none"/>`;
@@ -44,7 +48,7 @@ const Gambar = (() => {
   function jaringTabung(r, t, opt = {}) {
     const C = 2 * Math.PI * r;
     const totalH = t + (opt.tanpaTutup ? 2 * r : 4 * r);
-    const k = Math.min((W - 40) / Math.max(C, 2 * r), (H - 30) / totalH);
+    const k = SKALA.jaringTabung;
     const w = C * k, h = t * k, rr = r * k;
     const x0 = (W - w) / 2;
     const y0 = (H - totalH * k) / 2 + (opt.tanpaTutup ? 0 : 2 * rr);
@@ -66,9 +70,9 @@ const Gambar = (() => {
   /* ---------- Kerucut ---------- */
   function kerucut(r, t, opt = {}) {
     const s0 = Math.hypot(r, t);
-    const k = Math.min(200 / (2 * r), 200 / (t + 0.3 * r));
+    const k = SKALA.bangun;
     const rx = r * k, ry = rx * 0.3, h = t * k;
-    const cx = W / 2 - 14, top = (H - h - ry) / 2 + 4, bot = top + h;
+    const cx = W / 2 - 14, bot = 238, top = bot - h;
     const c = "var(--kerucut)";
     let s = "";
     s += `<path d="M ${n(cx)} ${n(top)} L ${n(cx - rx)} ${n(bot)} ${ellipseHalf(cx, bot, rx, ry, true).replace(/^M [^A]+/, "")} Z" fill="var(--kerucut-soft)"/>`;
@@ -102,7 +106,7 @@ const Gambar = (() => {
     pts.push([-r, sl + r], [r, sl + r], [0, sl + 2 * r]);
     const xs = pts.map((p) => p[0]), ys = pts.map((p) => p[1]);
     const minX = Math.min(...xs), maxX = Math.max(...xs), minY = Math.min(...ys), maxY = Math.max(...ys);
-    const k = Math.min((W - 40) / (maxX - minX), (H - 30) / (maxY - minY));
+    const k = SKALA.jaringKerucut;
     const ox = W / 2 - ((minX + maxX) / 2) * k, oy = (H - (maxY - minY) * k) / 2 - minY * k;
     const P = (x, y) => [ox + x * k, oy + y * k];
     const [ax, ay] = P(0, 0);
@@ -126,7 +130,7 @@ const Gambar = (() => {
 
   /* ---------- Bola ---------- */
   function bola(r, opt = {}) {
-    const R = 110, cx = W / 2, cy = H / 2 + 4;
+    const R = r * (opt.skala || SKALA.bola), cx = W / 2, cy = H / 2 + 4;
     const c = "var(--bola)";
     let s = "";
     if (opt.belahan) {
@@ -201,18 +205,13 @@ const Gambar = (() => {
       s += `<ellipse cx="${cx + half}" cy="${cy}" rx="14" ry="${rr}" fill="none" stroke="var(--ink)" stroke-dasharray="4 3"/>`;
       return svg(s, "Kapsul: tabung dengan belahan bola di kedua ujung");
     }
-    if (jenis === "tugu" || jenis === "padat") {
+    if (jenis === "padat") {
       const cx = 170, rx = 60, ry = 16, b = 250, m = 160, p = 30;
       s += `<path d="M ${cx - rx} ${m} L ${cx - rx} ${b} ${ellipseHalf(cx, b, rx, ry, true).replace("M", "L")} L ${cx + rx} ${m} Z" fill="var(--tabung-soft)" stroke="${T}" stroke-width="2.5"/>`;
       s += `<path d="M ${cx - rx} ${m} L ${cx} ${p} L ${cx + rx} ${m} A ${rx} ${ry} 0 0 1 ${cx - rx} ${m} Z" fill="var(--kerucut-soft)" stroke="${K}" stroke-width="2.5"/>`;
       s += `<ellipse cx="${cx}" cy="${m}" rx="${rx}" ry="${ry}" fill="none" stroke="var(--ink)" stroke-dasharray="4 3"/>`;
-      if (jenis === "tugu") {
-        s += `<line x1="40" y1="${b + ry}" x2="300" y2="${b + ry}" stroke="var(--muted)" stroke-width="3"/>`;
-        s += txt(300, b + ry + 12, "lantai", { size: 11, anchor: "end", fill: "var(--muted)", w: 600 });
-      } else {
-        s += `<path d="${ellipseHalf(cx, b, rx, ry, false)}" fill="none" stroke="${T}" stroke-width="1.4" stroke-dasharray="5 4"/>`;
-      }
-      return svg(s, "Tugu: tabung dengan kerucut di atasnya, berdiri di lantai");
+      s += `<path d="${ellipseHalf(cx, b, rx, ry, false)}" fill="none" stroke="${T}" stroke-width="1.4" stroke-dasharray="5 4"/>`;
+      return svg(s, "Bangun padat: tabung dengan kerucut di atasnya");
     }
     if (jenis === "kaleng") {
       const cx = 170, rx = 70, ry = 20, top = 60, bot = 230;
@@ -223,7 +222,7 @@ const Gambar = (() => {
       return svg(s, "Kaleng tanpa tutup");
     }
     // belahan bola padat
-    return bola(7, { belahan: true });
+    return bola(7, { belahan: true, skala: 15 });
   }
 
   /* ---------- Simulasi menuang ---------- */
