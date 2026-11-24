@@ -337,10 +337,10 @@
           <p class="lead">Tabung dibatasi dua lingkaran kongruen (alas dan tutup) dan satu bidang lengkung (selimut). Jika selimutnya digunting tegak lalu dibuka, bentuknya persegi panjang dengan panjang sama dengan keliling alas.</p></div>
         <section class="card"><h3>Laboratorium tabung</h3>
           <div class="lab">
-            <div class="fig"><div class="seg" id="tb-view" role="group" aria-label="Tampilan"><button type="button" data-v="bangun" aria-pressed="true">Bangun</button><button type="button" data-v="jaring" aria-pressed="false">Jaring-jaring</button></div><div id="tb-fig"></div></div>
+            <div class="fig"><div class="seg" id="tb-view" role="group" aria-label="Tampilan"><button type="button" data-v="bangun" aria-pressed="true">Bangun</button><button type="button" data-v="jaring" aria-pressed="false">Jaring-jaring</button></div><div id="tb-fig"></div><p class="muted skala-note">Skala gambar tetap: hanya ukuran yang kamu geser yang berubah.</p></div>
             <div class="ctrl">
-              ${slider("tb-r", "Jari-jari r", 1, 14, 0.5, 7)}
-              ${slider("tb-t", "Tinggi t", 1, 25, 0.5, 10)}
+              ${slider("tb-r", "Jari-jari r", 1, 10, 0.5, 7)}
+              ${slider("tb-t", "Tinggi t", 1, 20, 0.5, 10)}
               ${piSeg("tb-pi", "22/7")}
               <label class="chk"><input type="checkbox" id="tb-tutup"> Tanpa tutup (kaleng terbuka)</label>
               <div class="hasil" id="tb-hasil" aria-live="polite"></div>
@@ -395,10 +395,10 @@
           <p class="lead">Kerucut punya satu alas lingkaran dan satu titik puncak. Ada tiga ukuran yang saling terkait: jari-jari r, tinggi t (tegak lurus dari puncak ke pusat alas), dan garis pelukis s (dari puncak ke tepi alas).</p></div>
         <section class="card"><h3>Laboratorium kerucut</h3>
           <div class="lab">
-            <div class="fig"><div class="seg" id="kr-view" role="group" aria-label="Tampilan"><button type="button" data-v="bangun" aria-pressed="true">Bangun</button><button type="button" data-v="jaring" aria-pressed="false">Jaring-jaring</button></div><div id="kr-fig"></div></div>
+            <div class="fig"><div class="seg" id="kr-view" role="group" aria-label="Tampilan"><button type="button" data-v="bangun" aria-pressed="true">Bangun</button><button type="button" data-v="jaring" aria-pressed="false">Jaring-jaring</button></div><div id="kr-fig"></div><p class="muted skala-note">Skala gambar tetap: hanya ukuran yang kamu geser yang berubah.</p></div>
             <div class="ctrl">
-              ${slider("kr-r", "Jari-jari r", 1, 14, 0.5, 6)}
-              ${slider("kr-t", "Tinggi t", 1, 25, 0.5, 8)}
+              ${slider("kr-r", "Jari-jari r", 1, 10, 0.5, 6)}
+              ${slider("kr-t", "Tinggi t", 1, 20, 0.5, 8)}
               ${piSeg("kr-pi", "3,14")}
               <label class="chk"><input type="checkbox" id="kr-seg" checked> Tampilkan segitiga siku-siku r, t, s</label>
               <div class="hasil" id="kr-hasil" aria-live="polite"></div>
@@ -456,9 +456,9 @@
           <p class="lead">Bola hanya punya satu ukuran penentu: jari-jari r. Semua titik pada permukaan bola berjarak sama dari pusatnya. Bola tidak punya jaring-jaring datar, jadi rumus luasnya diperoleh dengan percobaan.</p></div>
         <section class="card"><h3>Laboratorium bola</h3>
           <div class="lab">
-            <div class="fig"><div class="seg" id="bl-view" role="group" aria-label="Tampilan"><button type="button" data-v="bola" aria-pressed="true">Bola</button><button type="button" data-v="belahan" aria-pressed="false">Belahan bola</button><button type="button" data-v="kulit" aria-pressed="false">Kulit = 4 lingkaran</button></div><div id="bl-fig"></div></div>
+            <div class="fig"><div class="seg" id="bl-view" role="group" aria-label="Tampilan"><button type="button" data-v="bola" aria-pressed="true">Bola</button><button type="button" data-v="belahan" aria-pressed="false">Belahan bola</button><button type="button" data-v="kulit" aria-pressed="false">Kulit = 4 lingkaran</button></div><div id="bl-fig"></div><p class="muted skala-note">Skala gambar tetap: hanya ukuran yang kamu geser yang berubah.</p></div>
             <div class="ctrl">
-              ${slider("bl-r", "Jari-jari r", 1, 21, 0.5, 7)}
+              ${slider("bl-r", "Jari-jari r", 1, 10, 0.5, 7)}
               ${piSeg("bl-pi", "22/7")}
               <div class="hasil" id="bl-hasil" aria-live="polite"></div>
             </div>

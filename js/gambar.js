@@ -3,6 +3,10 @@
  * Warna diambil dari variabel CSS (--tabung, --kerucut, --bola, --ink). */
 const Gambar = (() => {
   const W = 340, H = 280;
+  /* Skala tetap (piksel per cm). Gambar tidak diskalakan otomatis, jadi
+     mengubah satu ukuran hanya mengubah bagian itu di gambar.
+     Rentang slider: r 1-10 cm, t 1-20 cm. */
+  const SKALA = { bangun: 9, bola: 10, jaringTabung: 4.3, jaringKerucut: 3.8 };
   const n = (x) => Math.round(x * 10) / 10;
   const fmt = (x, dp = 2) => (Math.round(x * 10 ** dp) / 10 ** dp).toLocaleString("id-ID", { maximumFractionDigits: dp });
 
@@ -18,9 +22,9 @@ const Gambar = (() => {
 
   /* ---------- Tabung ---------- */
   function tabung(r, t, opt = {}) {
-    const k = Math.min(200 / (2 * r), 190 / (t + 0.6 * r));
+    const k = SKALA.bangun;
     const rx = r * k, ry = rx * 0.3, h = t * k;
-    const cx = W / 2 - 10, top = (H - h) / 2, bot = top + h;
+    const cx = W / 2 - 10, bot = 238, top = bot - h;
     const c = "var(--tabung)";
     let s = "";
     s += `<path d="M ${n(cx - rx)} ${n(top)} L ${n(cx - rx)} ${n(bot)} ${ellipseHalf(cx, bot, rx, ry, true).replace("M", "L")} L ${n(cx + rx)} ${n(top)} Z" fill="var(--tabung-soft)" stroke="none"/>`;
@@ -44,7 +48,7 @@ const Gambar = (() => {
   function jaringTabung(r, t, opt = {}) {
     const C = 2 * Math.PI * r;
     const totalH = t + (opt.tanpaTutup ? 2 * r : 4 * r);
-    const k = Math.min((W - 40) / Math.max(C, 2 * r), (H - 30) / totalH);
+    const k = SKALA.jaringTabung;
     const w = C * k, h = t * k, rr = r * k;
     const x0 = (W - w) / 2;
     const y0 = (H - totalH * k) / 2 + (opt.tanpaTutup ? 0 : 2 * rr);
@@ -66,9 +70,9 @@ const Gambar = (() => {
   /* ---------- Kerucut ---------- */
   function kerucut(r, t, opt = {}) {
     const s0 = Math.hypot(r, t);
-    const k = Math.min(200 / (2 * r), 200 / (t + 0.3 * r));
+    const k = SKALA.bangun;
     const rx = r * k, ry = rx * 0.3, h = t * k;
-    const cx = W / 2 - 14, top = (H - h - ry) / 2 + 4, bot = top + h;
+    const cx = W / 2 - 14, bot = 238, top = bot - h;
     const c = "var(--kerucut)";
     let s = "";
     s += `<path d="M ${n(cx)} ${n(top)} L ${n(cx - rx)} ${n(bot)} ${ellipseHalf(cx, bot, rx, ry, true).replace(/^M [^A]+/, "")} Z" fill="var(--kerucut-soft)"/>`;
@@ -102,7 +106,7 @@ const Gambar = (() => {
     pts.push([-r, sl + r], [r, sl + r], [0, sl + 2 * r]);
     const xs = pts.map((p) => p[0]), ys = pts.map((p) => p[1]);
     const minX = Math.min(...xs), maxX = Math.max(...xs), minY = Math.min(...ys), maxY = Math.max(...ys);
-    const k = Math.min((W - 40) / (maxX - minX), (H - 30) / (maxY - minY));
+    const k = SKALA.jaringKerucut;
     const ox = W / 2 - ((minX + maxX) / 2) * k, oy = (H - (maxY - minY) * k) / 2 - minY * k;
     const P = (x, y) => [ox + x * k, oy + y * k];
     const [ax, ay] = P(0, 0);
@@ -126,7 +130,7 @@ const Gambar = (() => {
 
   /* ---------- Bola ---------- */
   function bola(r, opt = {}) {
-    const R = 110, cx = W / 2, cy = H / 2 + 4;
+    const R = r * (opt.skala || SKALA.bola), cx = W / 2, cy = H / 2 + 4;
     const c = "var(--bola)";
     let s = "";
     if (opt.belahan) {
@@ -223,7 +227,7 @@ const Gambar = (() => {
       return svg(s, "Kaleng tanpa tutup");
     }
     // belahan bola padat
-    return bola(7, { belahan: true });
+    return bola(7, { belahan: true, skala: 15 });
   }
 
   /* ---------- Simulasi menuang ---------- */

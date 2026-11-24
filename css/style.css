@@ -130,6 +130,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 
 .lab { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 20px; align-items: start; }
 .fig { background: var(--surface-2); border-radius: 8px; padding: 8px; display: grid; gap: 8px; }
+.skala-note { font-size: 0.82rem; padding: 0 4px; }
 .fig svg { width: 100%; height: auto; display: block; max-height: 340px; }
 .seg { display: inline-flex; gap: 2px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 3px; justify-self: start; flex-wrap: wrap; }
 .seg button { border: 0; background: transparent; padding: 5px 12px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; }
