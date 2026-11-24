@@ -223,7 +223,41 @@
     });
   }
 
-  const BAB = [
+  const PERUBAHAN = typeof FITUR === "undefined" || FITUR.perubahanUkuran !== false;
+  const VARIASI = typeof FITUR === "undefined" || FITUR.variasiAngka !== false;
+
+  /* Simulasi menuang: tampil di bab Perubahan ukuran, atau di bab Bola jika bab itu dimatikan */
+  const SIM_TUANG = `
+        <section class="card"><h3>Simulasi menuang: kerucut, bola, dan tabung</h3>
+          <p>Tabung, kerucut, dan bola berjari-jari sama r. Tinggi tabung dan kerucut sama dengan 2r. <b>Tebak dulu:</b> berapa kerucut penuh air untuk mengisi tabung? Lalu coba tuang.</p>
+          <div class="tuang">
+            <div class="fig" id="tg-fig"></div>
+            <div class="ctrl">
+              <div class="btns"><button class="btn" type="button" id="tg-k"><span class="c-kerucut">▲</span> Tuang 1 kerucut</button><button class="btn" type="button" id="tg-b"><span class="c-bola">●</span> Tuang 1 bola</button><button class="btn ghost" type="button" id="tg-x">Kosongkan</button></div>
+              <div class="hasil" id="tg-hasil" aria-live="polite"></div>
+              <p class="muted">Kesimpulan: V kerucut : V bola : V tabung = 1 : 2 : 3. Satu kerucut ditambah satu bola tepat mengisi satu tabung.</p>
+            </div>
+          </div>
+        </section>`;
+  function mountTuang(el) {
+    // Simulasi menuang (dalam pertiga volume tabung)
+    let isi = 0, log = [];
+    const upT = () => {
+      $("#tg-fig", el).innerHTML = Gambar.wadah(isi);
+      const tumpah = isi > 3;
+      $("#tg-hasil", el).innerHTML =
+        row("Isi tabung", `${Math.min(isi, 3)}/3`, log.length ? "dituang: " + log.join(" + ") : "masih kosong") +
+        (isi === 3 ? row("Penuh!", "✓", log.every((x) => x === "kerucut") ? "3 kerucut = 1 tabung" : log.includes("bola") && log.includes("kerucut") ? "1 kerucut + 1 bola = 1 tabung" : "") : "") +
+        (tumpah ? row("Tumpah", "✗", "air melebihi tabung, kosongkan lalu coba lagi") : "");
+      $("#tg-k", el).disabled = isi >= 3; $("#tg-b", el).disabled = isi >= 3;
+    };
+    $("#tg-k", el).addEventListener("click", () => { isi += 1; log.push("kerucut"); upT(); });
+    $("#tg-b", el).addEventListener("click", () => { isi += 2; log.push("bola"); upT(); });
+    $("#tg-x", el).addEventListener("click", () => { isi = 0; log = []; upT(); });
+    upT();
+  }
+
+  const BAB_SEMUA = [
     {
       id: "peta", judul: "Peta materi", dot: "var(--accent)",
       render() {
@@ -235,7 +269,7 @@
           <div class="prose"><ol>
             <li>Mulai dari <a href="#belajar-prasyarat">Prasyarat</a> untuk memastikan lingkaran, juring, Pythagoras, dan satuan sudah lancar.</li>
             <li>Pelajari <a href="#belajar-tabung">Tabung</a>, <a href="#belajar-kerucut">Kerucut</a>, dan <a href="#belajar-bola">Bola</a>. Geser slider, buka jaring-jaringnya, dan amati rumus yang terisi otomatis.</li>
-            <li>Lanjutkan ke <a href="#belajar-gabungan">Gabungan &amp; konteks</a> serta <a href="#belajar-perubahan">Perubahan ukuran</a>, dua bagian yang paling sering muncul di soal penalaran.</li>
+            <li>Lanjutkan ke <a href="#belajar-gabungan">Gabungan &amp; konteks</a> ${PERUBAHAN ? ` serta <a href="#belajar-perubahan">Perubahan ukuran</a>, dua bagian yang paling sering muncul di soal penalaran.` : `, bagian yang paling sering muncul di soal penalaran.`}</li>
             <li>Setiap bab ditutup dengan <b>Cek pemahaman</b>. Tanda ✓ muncul di daftar bab jika semua cek sudah benar.</li>
             <li>Setelah itu buka tab <a href="#latihan">Latihan Mandiri</a> untuk latihan per topik atau simulasi sumatif 30 soal.</li>
           </ol></div>
@@ -271,13 +305,13 @@
             <div><span class="lvl-pill lv1">Mulai berkembang</span><p>Aku bisa menyebut unsur tabung, kerucut, bola, dan menghitung jika ukuran r sudah diberikan dan rumusnya tersedia.</p></div>
             <div><span class="lvl-pill lv2">Berkembang</span><p>Aku memilih rumus sendiri, mengubah diameter ke jari-jari, dan mencari garis pelukis dengan Pythagoras.</p></div>
             <div><span class="lvl-pill lv3">Cakap</span><p>Aku menyelesaikan soal bangun gabungan dan konteks multilangkah (biaya, waktu, banyak wadah) serta bekerja mundur dari volume ke ukuran.</p></div>
-            <div><span class="lvl-pill lv4">Mendalam</span><p>Aku menalar perubahan ukuran tanpa menghitung ulang, menilai pernyataan benar/salah, dan menemukan kesalahan pada penyelesaian orang lain.</p></div>
+            <div><span class="lvl-pill lv4">Mendalam</span><p>Aku ${PERUBAHAN ? "menalar perubahan ukuran tanpa menghitung ulang, " : ""}menilai pernyataan benar/salah, dan menemukan kesalahan pada penyelesaian orang lain.</p></div>
           </div>
         </section>
         <section class="card"><h3>Lima kesalahan yang paling sering terjadi</h3>
           <p class="muted">Hindari kesalahan-kesalahan ini. Jika jawabanmu di Latihan Mandiri mengarah ke salah satunya, umpan balik akan memberi tahu dan menunjukkan bagian yang perlu dipelajari lagi.</p>
           <div class="tbl-wrap"><table class="tbl"><thead><tr><th>Kesalahan</th><th>Pelajari di</th></tr></thead><tbody>
-            ${["M1", "M2", "M3", "M4", "M5"].map((k) => `<tr><td>${MISKONSEPSI[k].nama}</td><td><a href="#belajar-${MISKONSEPSI[k].bagian}">${BAB_NAMA[MISKONSEPSI[k].bagian]}</a></td></tr>`).join("")}
+            ${["M1", "M2", "M3", "M4", "M5"].filter((k) => BAB.some((b) => b.id === MISKONSEPSI[k].bagian)).map((k) => `<tr><td>${MISKONSEPSI[k].nama}</td><td><a href="#belajar-${MISKONSEPSI[k].bagian}">${BAB_NAMA[MISKONSEPSI[k].bagian]}</a></td></tr>`).join("")}
           </tbody></table></div>
         </section>`;
       },
@@ -479,7 +513,7 @@
         <details class="contoh"><summary>Contoh soal: mencari jari-jari dari volume</summary><div class="isi">
           <div class="soal-contoh">Volume bola 113,04 cm³ (π = 3,14). Berapa jari-jarinya?</div>
           <ol class="langkah"><li>113,04 = \\(\\frac{4}{3}\\) × 3,14 × r³.</li><li>\\(r^3 = \\frac{113{,}04 \\times 3}{4 \\times 3{,}14} = \\frac{339{,}12}{12{,}56} = 27\\).</li><li>r = ∛27 = <b>3 cm</b>.</li></ol>
-        </div></details>`;
+        </div></details>${PERUBAHAN ? "" : SIM_TUANG}`;
       },
       mount(el) {
         const st = { r: 7, pi: "22/7", view: "bola" };
@@ -499,6 +533,7 @@
         segBind(el, "#bl-pi", (b) => { st.pi = b.dataset.pi; up(); });
         segBind(el, "#bl-view", (b) => { st.view = b.dataset.v; up(); });
         up();
+        if (!PERUBAHAN) mountTuang(el);
       },
     },
     {
@@ -615,17 +650,7 @@
           </tbody></table></div>
         </section>
         ${awas("M4", "Perubahan ukuran tidak linear. Jari-jari 2 kali membuat volume bola 2³ = 8 kali dan luasnya 2² = 4 kali. Pada tabung, jari-jari 2 kali (tinggi tetap) membuat volume 2² = 4 kali.")}
-        <section class="card"><h3>Simulasi menuang: kerucut, bola, dan tabung</h3>
-          <p>Tabung, kerucut, dan bola berjari-jari sama r. Tinggi tabung dan kerucut sama dengan 2r. <b>Tebak dulu:</b> berapa kerucut penuh air untuk mengisi tabung? Lalu coba tuang.</p>
-          <div class="tuang">
-            <div class="fig" id="tg-fig"></div>
-            <div class="ctrl">
-              <div class="btns"><button class="btn" type="button" id="tg-k"><span class="c-kerucut">▲</span> Tuang 1 kerucut</button><button class="btn" type="button" id="tg-b"><span class="c-bola">●</span> Tuang 1 bola</button><button class="btn ghost" type="button" id="tg-x">Kosongkan</button></div>
-              <div class="hasil" id="tg-hasil" aria-live="polite"></div>
-              <p class="muted">Kesimpulan: V kerucut : V bola : V tabung = 1 : 2 : 3. Satu kerucut ditambah satu bola tepat mengisi satu tabung.</p>
-            </div>
-          </div>
-        </section>`;
+        ${SIM_TUANG}`;
       },
       mount(el) {
         const st = { b: "bola", k: 2 };
@@ -665,25 +690,13 @@
         $("#pu-k", el).addEventListener("input", (e) => { st.k = +e.target.value; up(); });
         up();
 
-        // Simulasi menuang (dalam pertiga volume tabung)
-        let isi = 0, log = [];
-        const upT = () => {
-          $("#tg-fig", el).innerHTML = Gambar.wadah(isi);
-          const tumpah = isi > 3;
-          $("#tg-hasil", el).innerHTML =
-            row("Isi tabung", `${Math.min(isi, 3)}/3`, log.length ? "dituang: " + log.join(" + ") : "masih kosong") +
-            (isi === 3 ? row("Penuh!", "✓", log.every((x) => x === "kerucut") ? "3 kerucut = 1 tabung" : log.includes("bola") && log.includes("kerucut") ? "1 kerucut + 1 bola = 1 tabung" : "") : "") +
-            (tumpah ? row("Tumpah", "✗", "air melebihi tabung, kosongkan lalu coba lagi") : "");
-          $("#tg-k", el).disabled = isi >= 3; $("#tg-b", el).disabled = isi >= 3;
-        };
-        $("#tg-k", el).addEventListener("click", () => { isi += 1; log.push("kerucut"); upT(); });
-        $("#tg-b", el).addEventListener("click", () => { isi += 2; log.push("bola"); upT(); });
-        $("#tg-x", el).addEventListener("click", () => { isi = 0; log = []; upT(); });
-        upT();
+        mountTuang(el);
       },
     },
   ];
-  const BAB_NAMA = Object.fromEntries(BAB.map((b) => [b.id, b.judul]));
+  // Bab yang dimatikan lewat js/config.js tetap ada di kode, hanya tidak ditampilkan
+  const BAB = BAB_SEMUA.filter((b) => PERUBAHAN || b.id !== "perubahan");
+  const BAB_NAMA = Object.fromEntries(BAB_SEMUA.map((b) => [b.id, b.judul]));
 
   function babSelesai(id) {
     const d = CEK[id];
@@ -723,7 +736,15 @@
   }
 
   /* ================= Tab Latihan Mandiri ================= */
+  // Soal yang dinonaktifkan lewat js/config.js tetap tersimpan di js/soal.js
+  const SOAL_AKTIF = SOAL.filter((q) => (typeof soalAktif === "function" ? soalAktif(q) : true));
+  const TOPIK_AKTIF = Object.fromEntries(Object.entries(TOPIK).filter(([k]) => SOAL_AKTIF.some((q) => q.topik === k)));
   const SOAL_BY_ID = Object.fromEntries(SOAL.map((q) => [q.id, q]));
+  const ADA_VARIASI = VARIASI && typeof Variasi !== "undefined";
+  // soal variasi angka disimpan di dalam kuis karena dibuat saat itu juga
+  const getQ = (id) => SOAL_BY_ID[id] || (kuis && kuis.gen && kuis.gen[id]);
+  const salahAktif = () => store.get("salah", []).filter((id) => SOAL_AKTIF.some((q) => q.id === id));
+  const NAMA_MODE = { topik: "Latihan per topik", sumatif: "Simulasi sumatif", ulang: "Ulangi soal yang salah", variasi: "Variasi angka" };
   let kuis = null, timerId = null;
 
   function unitSoal(daftar) {
@@ -739,10 +760,13 @@
   }
 
   function buatKuis(mode, opsi = {}) {
-    let daftar;
-    if (mode === "topik") daftar = SOAL.filter((q) => opsi.topik.includes(q.topik));
-    else if (mode === "ulang") daftar = SOAL.filter((q) => (store.get("salah", [])).includes(q.id));
-    else daftar = SOAL.slice();
+    let daftar, gen = null;
+    if (mode === "variasi") {
+      daftar = Variasi.buat(opsi.topik, opsi.n || 10);
+      gen = Object.fromEntries(daftar.map((q) => [q.id, q]));
+    } else if (mode === "topik") daftar = SOAL_AKTIF.filter((q) => opsi.topik.includes(q.topik));
+    else if (mode === "ulang") daftar = SOAL_AKTIF.filter((q) => salahAktif().includes(q.id));
+    else daftar = SOAL_AKTIF.slice();
     let units = acak(unitSoal(daftar));
     if (mode === "sumatif") {
       // ambil bergilir per topik sampai 30 soal, grup tetap utuh
@@ -763,9 +787,9 @@
     }
     const items = units.flat().map((q) => q.id);
     const urutan = {};
-    items.forEach((id) => { const q = SOAL_BY_ID[id]; if (q.opsi) urutan[id] = acak(q.opsi.map((_, i) => i)); });
+    items.forEach((id) => { const q = SOAL_BY_ID[id] || gen[id]; if (q.opsi) urutan[id] = acak(q.opsi.map((_, i) => i)); });
     kuis = {
-      mode, items, i: 0, jawaban: {}, cek: {}, ragu: [], urutan,
+      mode, items, gen, topikPilih: opsi.topik || null, i: 0, jawaban: {}, cek: {}, ragu: [], urutan,
       umpan: mode === "sumatif" ? "akhir" : opsi.umpan || "langsung",
       mulai: Date.now(), durasi: mode === "sumatif" ? 75 * 60 : 0, selesai: false,
     };
@@ -778,7 +802,7 @@
     main.innerHTML = "";
     clearInterval(timerId);
     const tersimpan = store.get("kuis", null);
-    if (tersimpan && !tersimpan.selesai && tersimpan.items && tersimpan.items.every((id) => SOAL_BY_ID[id])) kuis = tersimpan;
+    if (tersimpan && !tersimpan.selesai && tersimpan.items && tersimpan.items.every((id) => SOAL_BY_ID[id] || (tersimpan.gen && tersimpan.gen[id]))) kuis = tersimpan;
     if (kuis && !kuis.selesai) return renderKuis();
     if (kuis && kuis.selesai) return renderHasilKuis();
     renderMenu();
@@ -786,19 +810,24 @@
 
   function renderMenu() {
     const main = $("#main");
-    const salah = store.get("salah", []);
+    const salah = salahAktif();
     const riwayat = store.get("riwayat", []);
-    const hitung = (t) => SOAL.filter((q) => q.topik === t).length;
+    const hitung = (t) => SOAL_AKTIF.filter((q) => q.topik === t).length;
     const wrap = h(`<div class="wrap latihan">
       <div class="bab-head"><span class="eyebrow">Latihan Mandiri · persiapan sumatif akhir semester</span><h2>Pilih cara berlatih</h2>
-        <p class="lead">Bank soal berisi ${SOAL.length} soal dengan bentuk yang sama seperti sumatif dan TKA. Setiap pilihan yang salah mewakili satu kesalahan yang sering terjadi, jadi umpan baliknya memberi tahu letak kesulitanmu.</p></div>
+        <p class="lead">Bank soal berisi ${SOAL_AKTIF.length} soal dengan bentuk yang sama seperti sumatif dan TKA. Setiap pilihan yang salah mewakili satu kesalahan yang sering terjadi, jadi umpan baliknya memberi tahu letak kesulitanmu.</p></div>
       <div class="mode-grid">
         <section class="card mode"><h3>Latihan per topik</h3>
           <p class="muted">Pilih topik, kerjakan, dan lihat pembahasan langsung setelah setiap soal.</p>
-          <div class="topik-pilih" id="m-topik">${Object.entries(TOPIK).map(([k, v]) => `<label><input type="checkbox" value="${k}" id="mt-${k}" checked> ${v} <span class="muted">(${hitung(k)})</span></label>`).join("")}</div>
+          <div class="topik-pilih" id="m-topik">${Object.entries(TOPIK_AKTIF).map(([k, v]) => `<label><input type="checkbox" value="${k}" id="mt-${k}" checked> ${v} <span class="muted">(${hitung(k)})</span></label>`).join("")}</div>
           <label class="chk"><input type="checkbox" id="m-akhir"> Tampilkan pembahasan di akhir saja</label>
           <button class="btn primary" id="m-mulai-topik" type="button">Mulai latihan</button>
         </section>
+        ${ADA_VARIASI ? `<section class="card mode"><h3>Variasi angka</h3>
+          <p class="muted">Soal latihan dengan angka yang selalu baru setiap kali dimulai. Kerjakan berulang kali sampai lancar; kunci dan pembahasannya ikut menyesuaikan.</p>
+          <div class="topik-pilih" id="m-var">${Variasi.topik.filter((k) => TOPIK[k]).map((k) => `<label><input type="checkbox" value="${k}" id="mv-${k}" checked> ${TOPIK[k]}</label>`).join("")}</div>
+          <button class="btn primary" id="m-mulai-var" type="button">Buat 10 soal baru</button>
+        </section>` : ""}
         <section class="card mode"><h3>Simulasi sumatif</h3>
           <p class="muted">30 soal acak dari semua topik, 75 menit, seperti format TKA SMP. Nilai, perkiraan level, dan pembahasan muncul setelah selesai.</p>
           <div class="format"><div><b>30 soal</b><span>campuran PG, PG kompleks, Benar/Salah, isian</span></div><div><b>75 menit</b><span>waktu berjalan; jawaban tersimpan otomatis</span></div></div>
@@ -830,6 +859,12 @@
       renderKuis();
     });
     $("#m-mulai-sumatif").addEventListener("click", () => { buatKuis("sumatif"); renderKuis(); });
+    if (ADA_VARIASI) $("#m-mulai-var").addEventListener("click", () => {
+      const topik = $$("#m-var input:checked").map((i) => i.value);
+      if (!topik.length) { $("#m-mulai-var").textContent = "Pilih minimal satu topik"; return; }
+      buatKuis("variasi", { topik, umpan: "langsung" });
+      renderKuis();
+    });
     $("#m-mulai-ulang").addEventListener("click", () => { buatKuis("ulang", { umpan: "langsung" }); renderKuis(); });
   }
 
@@ -841,9 +876,9 @@
     main.innerHTML = "";
     clearInterval(timerId);
     const total = kuis.items.length;
-    const id = kuis.items[kuis.i], q = SOAL_BY_ID[id];
-    const judul = { topik: "Latihan per topik", sumatif: "Simulasi sumatif", ulang: "Ulangi soal yang salah" }[kuis.mode];
-    const terjawab = kuis.items.filter((x) => !nilai(SOAL_BY_ID[x], kuis.jawaban[x]).kosong).length;
+    const id = kuis.items[kuis.i], q = getQ(id);
+    const judul = NAMA_MODE[kuis.mode];
+    const terjawab = kuis.items.filter((x) => !nilai(getQ(x), kuis.jawaban[x]).kosong).length;
     const wrap = h(`<div class="wrap latihan"><div class="kuis">
       <div class="kuis-main">
         <div class="cek-head"><h3>${judul}</h3><span class="muted">Soal ${kuis.i + 1} dari ${total}</span></div>
@@ -869,7 +904,7 @@
     const nomor = $("#k-nomor");
     kuis.items.forEach((x, i) => {
       const cls = [];
-      const r = nilai(SOAL_BY_ID[x], kuis.jawaban[x]);
+      const r = nilai(getQ(x), kuis.jawaban[x]);
       if (!r.kosong) cls.push("jawab");
       if (kuis.cek[x]) cls.push(kuis.cek[x].benar ? "benar" : "salah");
       if (kuis.ragu.includes(x)) cls.push("ragu");
@@ -892,7 +927,7 @@
     function segarkanNomor() {
       const r = nilai(q, kuis.jawaban[id]);
       nomor.children[kuis.i].classList.toggle("jawab", !r.kosong);
-      const tj = kuis.items.filter((x) => !nilai(SOAL_BY_ID[x], kuis.jawaban[x]).kosong).length;
+      const tj = kuis.items.filter((x) => !nilai(getQ(x), kuis.jawaban[x]).kosong).length;
       $("#k-terjawab", wrap).textContent = `${tj} dari ${total} terjawab`;
       $(".bar i", wrap).style.width = `${(tj / total) * 100}%`;
     }
@@ -924,7 +959,7 @@
     });
 
     function konfirmasi() {
-      const kosong = kuis.items.filter((x) => nilai(SOAL_BY_ID[x], kuis.jawaban[x]).kosong).length;
+      const kosong = kuis.items.filter((x) => nilai(getQ(x), kuis.jawaban[x]).kosong).length;
       const ragu = kuis.ragu.length;
       $("#k-konfirmasi").innerHTML = `<div class="umpan ${kosong ? "no" : "ok"}"><div class="judul">Selesai sekarang?</div>
         <div>${kosong ? `Masih ada <b>${kosong}</b> soal yang belum dijawab.` : "Semua soal sudah dijawab."}${ragu ? ` Ada <b>${ragu}</b> soal yang ditandai ragu-ragu.` : ""}</div>
@@ -948,16 +983,16 @@
     clearInterval(timerId);
     kuis.selesai = true;
     kuis.hasil = {};
-    kuis.items.forEach((id) => (kuis.hasil[id] = nilai(SOAL_BY_ID[id], kuis.jawaban[id])));
+    kuis.items.forEach((id) => (kuis.hasil[id] = nilai(getQ(id), kuis.jawaban[id])));
     const benar = kuis.items.filter((id) => kuis.hasil[id].benar).length;
     const salahLama = new Set(store.get("salah", []));
-    kuis.items.forEach((id) => (kuis.hasil[id].benar ? salahLama.delete(id) : salahLama.add(id)));
+    kuis.items.filter((id) => SOAL_BY_ID[id]).forEach((id) => (kuis.hasil[id].benar ? salahLama.delete(id) : salahLama.add(id)));
     store.set("salah", [...salahLama]);
     const riwayat = store.get("riwayat", []);
     const d = new Date();
     riwayat.unshift({
       tgl: d.toLocaleDateString("id-ID", { day: "numeric", month: "short" }) + " " + d.toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" }),
-      mode: { topik: "Per topik", sumatif: "Simulasi sumatif", ulang: "Ulangi yang salah" }[kuis.mode],
+      mode: { topik: "Per topik", sumatif: "Simulasi sumatif", ulang: "Ulangi yang salah", variasi: "Variasi angka" }[kuis.mode],
       benar, total: kuis.items.length, skor: Math.round((benar / kuis.items.length) * 100),
     });
     store.set("riwayat", riwayat.slice(0, 20));
@@ -977,7 +1012,7 @@
   const LEVEL_SUKSES = [
     { nama: "Mulai berkembang", cls: "lv1", saran: "Ulangi Prasyarat dan bab Tabung, Kerucut, Bola di tab Belajar. Pastikan bisa mengubah diameter ke jari-jari dan memilih rumus yang tepat." },
     { nama: "Berkembang", cls: "lv2", saran: "Rumus dasar sudah dikuasai. Latih luas sebagian (tanpa tutup, belahan bola) dan konversi satuan, lalu lanjut ke bab Gabungan & konteks." },
-    { nama: "Cakap", cls: "lv3", saran: "Soal konteks multilangkah sudah baik. Tingkatkan penalaran: perubahan ukuran, perbandingan volume, dan soal Benar/Salah." },
+    { nama: "Cakap", cls: "lv3", saran: `Soal konteks multilangkah sudah baik. Tingkatkan penalaran: ${PERUBAHAN ? "perubahan ukuran, " : ""}perbandingan volume, dan soal Benar/Salah.` },
     { nama: "Mendalam", cls: "lv4", saran: "Penalaranmu kuat. Coba simulasi sumatif lagi dengan target waktu lebih cepat, atau jelaskan pembahasan soal ke temanmu." },
   ];
 
@@ -990,7 +1025,7 @@
     const skor = Math.round((benar / total) * 100);
     const grup = (key) => {
       const o = {};
-      items.forEach((id) => { const q = SOAL_BY_ID[id], k = q[key]; o[k] = o[k] || { b: 0, n: 0 }; o[k].n++; if (H[id].benar) o[k].b++; });
+      items.forEach((id) => { const q = getQ(id), k = q[key]; o[k] = o[k] || { b: 0, n: 0 }; o[k].n++; if (H[id].benar) o[k].b++; });
       return o;
     };
     const perTopik = grup("topik"), perLvl = grup("lvl");
@@ -1006,7 +1041,7 @@
       <section class="card"><div class="hasil-top">
         <div class="skor" style="background:conic-gradient(var(--accent) ${skor * 3.6}deg, var(--surface-2) 0)"><div style="background:var(--surface);width:78%;height:78%;border-radius:50%;display:grid;place-items:center"><div><b>${skor}</b><span>${benar} dari ${total} benar</span></div></div></div>
         <div style="display:grid;gap:8px;min-width:0">
-          <span class="eyebrow">Hasil ${{ topik: "latihan per topik", sumatif: "simulasi sumatif", ulang: "latihan ulang" }[kuis.mode]}</span>
+          <span class="eyebrow">Hasil ${{ topik: "latihan per topik", sumatif: "simulasi sumatif", ulang: "latihan ulang", variasi: "variasi angka" }[kuis.mode]}</span>
           <h2>Perkiraan level: <span class="lvl-pill ${lv.cls}" style="font-size:1rem">${lv.nama}</span></h2>
           <p>${lv.saran}</p>
           <p class="muted">Perkiraan ini dihitung dari persentase benar pada tiap jenis soal. Gunakan sebagai panduan, bukan nilai rapor.</p>
@@ -1019,12 +1054,12 @@
         ${misUrut.length ? `<p class="muted">Jawaban salahmu paling banyak cocok dengan kesalahan berikut. Mulailah dari yang teratas.</p><div class="mis-list">${misUrut.map(([m, ids]) => `<div class="mis-item"><div class="h"><b>${MISKONSEPSI[m].nama}</b><span class="cnt">${ids.length} soal (no. ${ids.map(nomorDari).join(", ")})</span></div><p>${MISKONSEPSI[m].jelas}</p><a href="#belajar-${MISKONSEPSI[m].bagian}">Pelajari lagi di bab ${BAB_NAMA[MISKONSEPSI[m].bagian]} →</a></div>`).join("")}</div>` : `<p>${benar === total ? "Tidak ada jawaban salah. Hebat!" : "Jawaban salahmu tidak cocok dengan pola miskonsepsi tertentu. Baca pembahasan di bawah untuk melihat letak kesalahannya."}</p>`}
       </section>
       <section class="card"><h3>Pembahasan tiap soal</h3><p class="muted">Klik soal untuk melihat jawabanmu dan pembahasannya.</p><div class="review" id="h-review"></div></section>
-      <div class="btns"><button class="btn primary" id="h-lagi" type="button">Kembali ke menu latihan</button>${store.get("salah", []).length ? `<button class="btn" id="h-ulang" type="button">Ulangi soal yang salah</button>` : ""}</div>
+      <div class="btns">${kuis.mode === "variasi" ? `<button class="btn primary" id="h-paket" type="button">Paket soal baru (angka lain)</button>` : ""}<button class="btn ${kuis.mode === "variasi" ? "" : "primary"}" id="h-lagi" type="button">Kembali ke menu latihan</button>${kuis.mode !== "variasi" && salahAktif().length ? `<button class="btn" id="h-ulang" type="button">Ulangi soal yang salah</button>` : ""}</div>
     </div>`);
     main.append(wrap);
     const rv = $("#h-review");
     items.forEach((id, i) => {
-      const q = SOAL_BY_ID[id], r = H[id];
+      const q = getQ(id), r = H[id];
       const plain = h(`<div>${q.soal}</div>`).textContent;
       const d = h(`<details><summary><span class="st ${r.benar ? "b" : "s"}">${r.benar ? "✓" : "✗"}</span><span class="t"><b>${i + 1}.</b> ${plain}</span></summary><div class="rq"></div></details>`);
       d.addEventListener("toggle", () => {
@@ -1037,6 +1072,8 @@
       rv.append(d);
     });
     $("#h-lagi").addEventListener("click", () => { kuis = null; store.del("kuis"); renderMenu(); window.scrollTo({ top: 0 }); });
+    const pk = $("#h-paket");
+    if (pk) pk.addEventListener("click", () => { buatKuis("variasi", { topik: kuis.topikPilih || Variasi.topik, umpan: "langsung" }); renderKuis(); window.scrollTo({ top: 0 }); });
     const u = $("#h-ulang");
     if (u) u.addEventListener("click", () => { buatKuis("ulang", { umpan: "langsung" }); renderKuis(); window.scrollTo({ top: 0 }); });
   }
