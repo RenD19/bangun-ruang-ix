@@ -753,14 +753,14 @@ const CEK = {
   gabungan: [
     {
       id: "C-G1", tipe: "pg", lvl: "A", topik: "gabungan",
-      soal: "Sebuah tugu terdiri atas tabung (r = 7 cm, t = 10 cm) dengan kerucut (r = 7 cm, t = 24 cm) di atasnya. Tugu berdiri di lantai. Bagian luar tugu, kecuali alas yang menempel di lantai, dicat. Luas yang dicat adalah … (π = \\(\\frac{22}{7}\\))",
+      soal: "Sebuah kapsul terdiri atas tabung (r = 3 mm, t = 10 mm) dengan belahan bola di kedua ujungnya. Volume kapsul adalah … (π = 3,14)",
       opsi: [
-        { t: "990 cm²", benar: true, why: "Selimut tabung 440 + selimut kerucut 550 = 990 cm². Tutup tabung tertutup kerucut, alas tabung menempel di lantai." },
-        { t: "1.144 cm²", mis: "M3", why: "Ini menambahkan satu lingkaran (154 cm²). Alas tabung di lantai dan tutup tabung di bawah kerucut tidak terlihat." },
-        { t: "1.298 cm²", mis: "M3", why: "Ini menambahkan dua lingkaran. Keduanya tidak terlihat dari luar." },
-        { t: "968 cm²", mis: "M2", why: "Ini memakai tinggi kerucut (24 cm) untuk luas selimut kerucut. Seharusnya s = 25 cm." },
+        { t: "395,64 mm³", benar: true, why: "Volume tabung 282,6 + dua belahan bola (= satu bola utuh) 113,04 = 395,64 mm³." },
+        { t: "508,68 mm³", mis: "E3", why: "Ini menghitung dua bola utuh. Dua belahan bola hanya sama dengan satu bola." },
+        { t: "339,12 mm³", mis: "E3", why: "Ini hanya menambahkan satu belahan bola. Kapsul punya belahan bola di kedua ujung." },
+        { t: "301,44 mm²", mis: "E2", why: "Ini luas permukaan kapsul (2πrt + 4πr²), bukan volume." },
       ],
-      pembahasan: "s kerucut = √(49 + 576) = 25 cm. Selimut kerucut = \\(\\frac{22}{7}\\) × 7 × 25 = 550 cm². Selimut tabung = 2 × \\(\\frac{22}{7}\\) × 7 × 10 = 440 cm². Total = 990 cm².",
+      pembahasan: "V tabung = 3,14 × 3² × 10 = 282,6 mm³. Dua belahan bola = satu bola = \\(\\frac{4}{3}\\) × 3,14 × 3³ = 113,04 mm³. Total = 395,64 mm³.",
     },
   ],
   perubahan: [

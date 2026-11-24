@@ -17,7 +17,7 @@ Buka `index.html` di peramban (klik dua kali sudah cukup, tidak perlu server). M
 | Tabung | lab interaktif (slider r dan t, pilihan π, tanpa tutup, jaring-jaring) |
 | Kerucut | lab interaktif dengan segitiga r–t–s dan jaring-jaring juring (sudut pusat otomatis) |
 | Bola | lab interaktif, belahan bola, peraga "kulit = 4 lingkaran" |
-| Gabungan & konteks | latihan memilih sisi yang dihitung (kapsul, tugu, kaleng, belahan bola padat), contoh soal konteks |
+| Gabungan & konteks | latihan memilih sisi yang dihitung (kapsul, tabung + kerucut padat, kaleng, belahan bola padat), contoh soal konteks |
 | Perubahan ukuran *(sedang dinonaktifkan)* | prediksi k, k², k³ sebelum hasil ditampilkan, simulasi menuang kerucut : bola : tabung = 1 : 2 : 3 (saat bab ini mati, simulasi menuang pindah ke bab Bola) |
 
 Setiap bab punya kotak **Awas** (miskonsepsi), contoh soal bertahap, dan **Cek pemahaman** dengan umpan balik langsung.

@@ -205,18 +205,13 @@ const Gambar = (() => {
       s += `<ellipse cx="${cx + half}" cy="${cy}" rx="14" ry="${rr}" fill="none" stroke="var(--ink)" stroke-dasharray="4 3"/>`;
       return svg(s, "Kapsul: tabung dengan belahan bola di kedua ujung");
     }
-    if (jenis === "tugu" || jenis === "padat") {
+    if (jenis === "padat") {
       const cx = 170, rx = 60, ry = 16, b = 250, m = 160, p = 30;
       s += `<path d="M ${cx - rx} ${m} L ${cx - rx} ${b} ${ellipseHalf(cx, b, rx, ry, true).replace("M", "L")} L ${cx + rx} ${m} Z" fill="var(--tabung-soft)" stroke="${T}" stroke-width="2.5"/>`;
       s += `<path d="M ${cx - rx} ${m} L ${cx} ${p} L ${cx + rx} ${m} A ${rx} ${ry} 0 0 1 ${cx - rx} ${m} Z" fill="var(--kerucut-soft)" stroke="${K}" stroke-width="2.5"/>`;
       s += `<ellipse cx="${cx}" cy="${m}" rx="${rx}" ry="${ry}" fill="none" stroke="var(--ink)" stroke-dasharray="4 3"/>`;
-      if (jenis === "tugu") {
-        s += `<line x1="40" y1="${b + ry}" x2="300" y2="${b + ry}" stroke="var(--muted)" stroke-width="3"/>`;
-        s += txt(300, b + ry + 12, "lantai", { size: 11, anchor: "end", fill: "var(--muted)", w: 600 });
-      } else {
-        s += `<path d="${ellipseHalf(cx, b, rx, ry, false)}" fill="none" stroke="${T}" stroke-width="1.4" stroke-dasharray="5 4"/>`;
-      }
-      return svg(s, "Tugu: tabung dengan kerucut di atasnya, berdiri di lantai");
+      s += `<path d="${ellipseHalf(cx, b, rx, ry, false)}" fill="none" stroke="${T}" stroke-width="1.4" stroke-dasharray="5 4"/>`;
+      return svg(s, "Bangun padat: tabung dengan kerucut di atasnya");
     }
     if (jenis === "kaleng") {
       const cx = 170, rx = 70, ry = 20, top = 60, bot = 230;

@@ -541,15 +541,15 @@
       render() {
         return `
         <div class="bab-head"><span class="eyebrow">Bab 4</span><h2>Bangun gabungan dan soal konteks</h2>
-          <p class="lead">Kapsul, es krim, tugu, dan tandon air adalah gabungan tabung, kerucut, dan bola. Volume gabungan cukup dijumlahkan. Luas permukaan perlu hati-hati: sisi yang menempel tidak terlihat, jadi tidak dihitung.</p></div>
+          <p class="lead">Kapsul, es krim, kaleng, dan tandon air adalah gabungan tabung, kerucut, dan bola. Volume gabungan cukup dijumlahkan. Luas permukaan perlu hati-hati: sisi yang menempel tidak terlihat, jadi tidak dihitung.</p></div>
         <section class="card"><h3>Latihan memilih sisi yang dihitung</h3>
           <p class="muted">Pilih bangun, centang semua bagian yang luasnya dihitung untuk <b>luas permukaan luar</b>, lalu periksa.</p>
           <div class="seg" id="gb-pilih" role="group" aria-label="Pilih bangun">
-            <button type="button" data-g="kapsul" aria-pressed="true">Kapsul</button><button type="button" data-g="tugu" aria-pressed="false">Tugu di lantai</button><button type="button" data-g="padat" aria-pressed="false">Tabung + kerucut padat</button><button type="button" data-g="kaleng" aria-pressed="false">Kaleng terbuka</button><button type="button" data-g="belahan" aria-pressed="false">Belahan bola padat</button>
+            <button type="button" data-g="kapsul" aria-pressed="true">Kapsul</button><button type="button" data-g="padat" aria-pressed="false">Tabung + kerucut padat</button><button type="button" data-g="kaleng" aria-pressed="false">Kaleng terbuka</button><button type="button" data-g="belahan" aria-pressed="false">Belahan bola padat</button>
           </div>
           <div class="lab"><div class="fig" id="gb-fig"></div><div class="ctrl"><div class="pilih-bagian" id="gb-parts"></div><div class="btns"><button class="btn primary sm" id="gb-cek" type="button">Periksa</button></div><div id="gb-fb"></div></div></div>
         </section>
-        ${awas("M3", "Gunakan cara berpikir jaring-jaring: daftar semua sisi bangun, lalu coret sisi yang menempel pada bangun lain atau pada lantai, dan sisi yang memang tidak ada (tanpa tutup). Baru jumlahkan sisanya.")}
+        ${awas("M3", "Gunakan cara berpikir jaring-jaring: daftar semua sisi bangun, lalu coret sisi yang menempel pada bangun lain dan sisi yang memang tidak ada (tanpa tutup). Baru jumlahkan sisanya.")}
         <section class="card"><h3>Langkah menyelesaikan soal konteks</h3>
           <div class="prose"><ol>
             <li><b>Kenali bangun</b> dan gambar sketsanya. Tulis r (bukan d), t, dan s. Jika gambar memberi tinggi <i>seluruh</i> bangun, kurangi dengan tinggi bagian lain untuk mendapat tinggi tiap bagian.</li>
@@ -570,7 +570,6 @@
         <details class="contoh"><summary>Contoh soal: membaca ukuran pada gambar bangun gabungan</summary><div class="isi">
           <div class="soal-contoh">Bangun padat terdiri atas tabung dan kerucut di atasnya. Diameter alas 10 cm, tinggi tabung 6 cm, dan tinggi seluruh bangun 18 cm. Hitung luas permukaannya (π = 3,14).</div>
           <ol class="langkah"><li>\\(r = \\frac{10}{2} = 5\\) cm. Tinggi kerucut = 18 − 6 = 12 cm (bukan 18 cm).</li><li>s = \\(\\sqrt{5^2 + 12^2} = \\sqrt{169} = 13\\) cm.</li><li>Sisi yang terlihat: alas tabung, selimut tabung, selimut kerucut. Tutup tabung dan alas kerucut saling menempel.</li><li>L = 3,14 × 25 + 2 × 3,14 × 5 × 6 + 3,14 × 5 × 13 = 78,5 + 188,4 + 204,1 = <b>471 cm²</b>.</li></ol>
-          <p class="muted">Jika bangun berdiri di lantai dan yang ditanya bagian yang dicat, alas tabung tidak dihitung.</p>
         </div></details>
         <details class="contoh"><summary>Contoh soal: beberapa bola dimasukkan ke dalam air</summary><div class="isi">
           <div class="soal-contoh">Wadah tabung berjari-jari 10 cm berisi air setinggi 8 cm. Tiga bola berjari-jari 5 cm dimasukkan sampai tenggelam. Berapa tinggi air sekarang? (π = 3,14)</div>
@@ -594,8 +593,7 @@
       mount(el) {
         const DATA = {
           kapsul: [["Selimut tabung", true], ["Dua lingkaran ujung tabung", false, "Ujung tabung tertutup belahan bola, jadi tidak terlihat."], ["Kulit lengkung dua belahan bola (= satu kulit bola utuh)", true], ["Dua alas datar belahan bola", false, "Alas datar belahan bola menempel pada ujung tabung."]],
-          tugu: [["Selimut tabung", true], ["Tutup tabung", false, "Tutup tabung tertutup alas kerucut."], ["Alas tabung", false, "Alas tabung menempel di lantai."], ["Selimut kerucut", true], ["Alas kerucut", false, "Alas kerucut menempel pada tutup tabung."]],
-          padat: [["Selimut tabung", true], ["Alas tabung", true, "Bangun tidak diletakkan di lantai, jadi alas tabung terlihat dan dihitung."], ["Tutup tabung", false, "Tutup tabung tertutup alas kerucut."], ["Selimut kerucut", true], ["Alas kerucut", false, "Alas kerucut menempel pada tutup tabung."]],
+          padat: [["Selimut tabung", true], ["Alas tabung", true, "Alas tabung adalah sisi luar bangun, jadi dihitung."], ["Tutup tabung", false, "Tutup tabung tertutup alas kerucut."], ["Selimut kerucut", true], ["Alas kerucut", false, "Alas kerucut menempel pada tutup tabung."]],
           kaleng: [["Alas kaleng", true], ["Selimut kaleng", true], ["Tutup kaleng", false, "Kaleng terbuka tidak punya tutup."]],
           belahan: [["Kulit lengkung (2πr²)", true], ["Alas lingkaran datar (πr²)", true, "Belahan bola padat punya alas datar. Totalnya 3πr²."]],
         };
