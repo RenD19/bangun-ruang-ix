@@ -72,9 +72,9 @@ const TOPIK = {
 };
 
 const LEVEL = {
-  P: "Pengetahuan & Pemahaman",
-  A: "Aplikasi",
-  N: "Penalaran",
+  P: "Memahami konsep",
+  A: "Menerapkan rumus",
+  N: "Bernalar",
 };
 
 /* Stimulus untuk soal grup (satu stimulus, beberapa soal) */
